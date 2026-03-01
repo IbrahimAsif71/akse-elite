@@ -1,6 +1,8 @@
 export default defineNuxtConfig({
-  ssr: false,
   nitro: {
-    preset: 'static'
-  }
+    preset: 'netlify'
+  },
+
+  // IMPORTANT: make sure your global stylesheet is included
+  css: ['~/assets/styles/main.css']
 })
