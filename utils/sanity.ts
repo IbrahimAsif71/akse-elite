@@ -1,12 +1,16 @@
 import { createClient } from '@sanity/client'
-import { createImageUrlBuilder } from '@sanity/image-url'
+import imageUrlBuilder from '@sanity/image-url'
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
+import { useRuntimeConfig } from '#imports'
+
+const config = useRuntimeConfig()
 
 export const sanity = createClient({
-  projectId: '44elzz3z',
-  dataset: 'production',
-  apiVersion: '2026-03-01',
+  projectId: config.public.sanityProjectId as string,
+  dataset: config.public.sanityDataset as string,
+  apiVersion: config.public.sanityApiVersion as string,
   useCdn: true
 })
 
-const builder = createImageUrlBuilder(sanity)
-export const urlFor = (source: any) => builder.image(source)
+const builder = imageUrlBuilder(sanity)
+export const urlFor = (source: SanityImageSource) => builder.image(source)
