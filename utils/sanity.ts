@@ -1,6 +1,5 @@
 import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 import { useRuntimeConfig } from '#imports'
 
 const config = useRuntimeConfig()
@@ -13,4 +12,6 @@ export const sanity = createClient({
 })
 
 const builder = imageUrlBuilder(sanity)
-export const urlFor = (source: SanityImageSource) => builder.image(source)
+
+// keep it simple: accept any image source (Sanity image objects vary)
+export const urlFor = (source: any) => builder.image(source)
