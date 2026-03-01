@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
   "build": "nuxt build",
-  "postbuild": "mkdir -p dist && echo '/*  /.netlify/functions/server  200' > dist/_redirects",
   "dev": "nuxt dev",
   "generate": "nuxt generate",
   "preview": "nuxt preview",
