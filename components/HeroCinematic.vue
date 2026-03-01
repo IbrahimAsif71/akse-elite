@@ -1,8 +1,8 @@
 <template>
   <section class="homeHero">
-    <video autoplay muted loop playsinline preload="auto" class="homeHeroBg">
-      <source src="/video/hero.mp4" type="video/mp4" />
-    </video>
+    <video autoplay muted loop playsinline>
+  <source src="/video/hero.mp4" type="video/mp4" />
+</video>
 
     <div class="homeHeroOverlay">
       <h1 ref="h">Digital Immortality</h1>
