@@ -3,13 +3,12 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "nuxt build",
-    "postbuild": "mkdir -p .output/public && echo '/*  /.netlify/functions/server  200' > .output/public/_redirects",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
+  "build": "nuxt build",
+  "dev": "nuxt dev",
+  "generate": "nuxt generate",
+  "preview": "nuxt preview",
+  "postinstall": "nuxt prepare"
+},
   "dependencies": {
     "@portabletext/vue": "^1.0.14",
     "@sanity/client": "^7.16.0",
