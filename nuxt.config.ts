@@ -1,4 +1,7 @@
 export default defineNuxtConfig({
+  nitro: {
+    preset: 'netlify'
+  },
   runtimeConfig: {
     public: {
       sanityProjectId: process.env.NUXT_PUBLIC_SANITY_PROJECT_ID || '44elzz3z',
