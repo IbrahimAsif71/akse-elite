@@ -80,6 +80,7 @@ onMounted(() => {
 
 .homeHeroOverlay h1{ font-size:64px; font-weight:300; letter-spacing:1px; margin:0 0 14px; }
 .homeHeroOverlay p{ font-size:18px; line-height:1.8; opacity:0.9; max-width:760px; margin:0; }
+.homeHeroOverlay{ z-index: 5 !important; }
 
 .btns{ margin-top:28px; display:flex; gap:14px; flex-wrap:wrap; }
 .btn{ display:inline-block; background:var(--rust); padding:12px 18px; border-radius:999px; color:white; text-decoration:none; }
