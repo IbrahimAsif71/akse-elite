@@ -5,10 +5,6 @@
 </template>
 
 <style>
-html, body, #__nuxt {
-  background: radial-gradient(1200px 700px at 50% -10%, #14141a 0%, #07070a 55%, #050508 100%) !important;
-  min-height: 100%;
-}
 /* Luxury page transitions */
 .page-enter-active,
 .page-leave-active{
