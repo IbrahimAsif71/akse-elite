@@ -165,39 +165,24 @@ const handleSubmit = async (e) => {
     <div class="contactRight">
 
       <form
-        name="akse-contact"
-        method="POST"
-        data-netlify="true"
-        @submit.prevent="handleSubmit"
-      >
-        <input type="hidden" name="form-name" value="akse-contact" />
+  name="start-project"
+  method="POST"
+  data-netlify="true"
+  data-netlify-honeypot="bot-field"
+  action="/thank-you"
+>
+  <input type="hidden" name="form-name" value="start-project" />
 
-        <input required type="text" name="name" placeholder="Your Name" />
-        <input required type="email" name="email" placeholder="Email Address" />
+  <p hidden>
+    <input name="bot-field" />
+  </p>
 
-        <select name="service" required>
-          <option value="">Select Service</option>
-          <option>Heritage 3D Tour</option>
-          <option>Museum Capture</option>
-          <option>Commercial 360 Experience</option>
-          <option>Archival Documentation</option>
-        </select>
+  <input type="text" name="name" required />
+  <input type="email" name="email" required />
+  <textarea name="message" required></textarea>
 
-        <textarea
-          required
-          name="message"
-          rows="5"
-          placeholder="Tell us about your project..."
-        ></textarea>
-
-        <button type="submit" :disabled="sending">
-          {{ sending ? 'Sending...' : 'Submit Inquiry' }}
-        </button>
-
-        <div v-if="sent" class="success">
-          Thank you. We’ll get back to you shortly.
-        </div>
-      </form>
+  <button type="submit">Send</button>
+</form>
 
     </div>
   </section>
