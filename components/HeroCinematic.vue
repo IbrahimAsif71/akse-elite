@@ -1,16 +1,17 @@
 <template>
   <section class="homeHero">
     <video
-  class="homeHeroBg"
-  autoplay
-  muted
-  loop
-  playsinline
-  webkit-playsinline
-  preload="auto"
->
-  <source src="/video/hero.mp4" type="video/mp4" />
-</video>
+      ref="videoEl"
+      class="homeHeroBg"
+      autoplay
+      muted
+      loop
+      playsinline
+      webkit-playsinline
+      preload="auto"
+    >
+      <source src="/video/hero.mp4" type="video/mp4" />
+    </video>
 
     <div class="homeHeroOverlay">
       <h1 ref="h">Digital Immortality</h1>
@@ -25,7 +26,8 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, onBeforeUnmount, ref } from 'vue'
+
 const { $gsap } = useNuxtApp()
 
 const h = ref(null)
@@ -36,18 +38,28 @@ const videoEl = ref(null)
 const tryPlay = async () => {
   const v = videoEl.value
   if (!v) return
+
+  // iOS Safari quirks: make sure these are set as attributes too
   v.muted = true
-  v.playsInline = true
+  v.defaultMuted = true
+  v.setAttribute('muted', '')
+  v.setAttribute('playsinline', '')
+  v.setAttribute('webkit-playsinline', '')
 
   try {
+    v.load() // helps in some iOS cases
     await v.play()
   } catch (e) {
-    // iOS blocked autoplay
+    // autoplay blocked -> user gesture required
   }
 }
 
+const onFirstGesture = () => {
+  tryPlay()
+}
+
 onMounted(() => {
-  // GSAP animation
+  // GSAP animation (text/buttons)
   const tl = $gsap.timeline()
   tl.from(h.value, { y: 120, opacity: 0, duration: 1.2, ease: 'power4.out' })
     .from(p.value, { y: 50, opacity: 0, duration: 1.0 }, '-=0.8')
@@ -56,16 +68,22 @@ onMounted(() => {
   // Try autoplay
   tryPlay()
 
-  // If blocked, first touch will start it
-  window.addEventListener('touchstart', tryPlay, { once: true })
+  // Fallback: first user gesture starts the video
+  window.addEventListener('touchstart', onFirstGesture, { once: true, passive: true })
+  window.addEventListener('click', onFirstGesture, { once: true })
+})
+
+onBeforeUnmount(() => {
+  // Safety cleanup (in case route changes before "once" triggers)
+  window.removeEventListener('touchstart', onFirstGesture)
+  window.removeEventListener('click', onFirstGesture)
 })
 </script>
 
 <style scoped>
-/* paste ALL your .homeHero CSS here */
 .homeHero{
   position: relative;
-  isolation: isolate; /* IMPORTANT: prevents weird stacking with video */
+  isolation: isolate;
   min-height: 100vh;
   overflow: hidden;
   display: flex;
@@ -88,67 +106,85 @@ onMounted(() => {
   content:"";
   position:absolute;
   inset:0;
-  z-index: -1;  /* between video (-2) and text (1+) */
-  background:
-    radial-gradient(900px 540px at 50% 45%, rgba(0,0,0,0.35), rgba(0,0,0,0.65));
+  z-index: -1;
+  background: radial-gradient(
+    900px 540px at 50% 45%,
+    rgba(0,0,0,0.35),
+    rgba(0,0,0,0.65)
+  );
 }
 
 .homeHeroOverlay{
-  position:relative;
-  z-index:2;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  justify-content:center;
-  max-width:1100px;
-  margin:0 auto;
-  width:100%;
-  min-height:auto;
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
   padding: 0 22px;
-  color:white;
-  text-align:left;
+  color: white;
+  text-align: left;
 }
-
-.homeHeroOverlay h1{ font-size:64px; font-weight:300; letter-spacing:1px; margin:0 0 14px; }
-.homeHeroOverlay p{ font-size:18px; line-height:1.8; opacity:0.9; max-width:760px; margin:0; }
-.homeHeroOverlay{ z-index: 5 !important; }
-
-.btns{ margin-top:28px; display:flex; gap:14px; flex-wrap:wrap; }
-.btn{ display:inline-block; background:var(--rust); padding:12px 18px; border-radius:999px; color:white; text-decoration:none; }
-.ghost{ background: rgba(0,0,0,0.18); border: 1px solid rgba(255,255,255,0.35); }
-
-@media (max-width: 640px){
-  .homeHeroOverlay{ align-items:center; text-align:center; }
-  .homeHeroOverlay h1{ font-size:44px; }
-  .homeHeroOverlay p{ font-size:16px; }
-  .btns{ justify-content:center; }
-}
-
 
 .homeHeroOverlay h1{
   font-size: clamp(38px, 6vw, 72px);
   line-height: 1.1;
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin: 0 0 14px;
 }
 
 .homeHeroOverlay p{
   font-size: clamp(15px, 2.5vw, 20px);
+  line-height: 1.8;
+  opacity: 0.9;
   max-width: 640px;
+  margin: 0;
 }
 
-@media (max-width: 768px){
+.btns{
+  margin-top: 28px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn{
+  display: inline-block;
+  background: var(--rust);
+  padding: 12px 18px;
+  border-radius: 999px;
+  color: white;
+  text-decoration: none;
+}
+
+.ghost{
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.35);
+}
+
+@media (max-width: 640px){
   .homeHeroOverlay{
     align-items: center;
     text-align: center;
-    padding: 0 18px;
   }
+  .btns{
+    justify-content: center;
+  }
+}
+
 @media (max-width: 768px){
   .homeHero{
     padding-top: calc(80px + env(safe-area-inset-top));
   }
   .homeHeroOverlay{
+    align-items: center;
+    text-align: center;
     padding: 0 18px;
   }
-}
   .btns{
     justify-content: center;
   }
