@@ -14,7 +14,7 @@
     </video>
 
     <div class="homeHeroOverlay">
-      <h1 ref="h">Digital Immortality</h1>
+      <h1 ref="h">Heritage Redefined</h1>
       <p ref="p">Preserving heritage through immersive 3D and 360° pathways.</p>
 
       <div ref="btns" class="btns">

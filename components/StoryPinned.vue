@@ -2,7 +2,7 @@
   <section ref="wrap" class="wrap">
     <div ref="pin" class="pin">
       <div class="left">
-        <h2 ref="title">From Site to Digital Immortality</h2>
+        <h2 ref="title">From Site to a Living Memory</h2>
         <p class="muted">
           A structured process that preserves cultural spaces with cinematic fidelity.
         </p>
