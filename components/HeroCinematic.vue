@@ -1,6 +1,14 @@
 <template>
   <section class="homeHero">
-    <video class="homeHeroBg" autoplay muted loop playsinline>
+    <video
+  class="homeHeroBg"
+  autoplay
+  muted
+  loop
+  playsinline
+  webkit-playsinline
+  preload="auto"
+>
   <source src="/video/hero.mp4" type="video/mp4" />
 </video>
 
@@ -19,15 +27,37 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 const { $gsap } = useNuxtApp()
+
 const h = ref(null)
 const p = ref(null)
 const btns = ref(null)
+const videoEl = ref(null)
+
+const tryPlay = async () => {
+  const v = videoEl.value
+  if (!v) return
+  v.muted = true
+  v.playsInline = true
+
+  try {
+    await v.play()
+  } catch (e) {
+    // iOS blocked autoplay
+  }
+}
 
 onMounted(() => {
+  // GSAP animation
   const tl = $gsap.timeline()
   tl.from(h.value, { y: 120, opacity: 0, duration: 1.2, ease: 'power4.out' })
     .from(p.value, { y: 50, opacity: 0, duration: 1.0 }, '-=0.8')
     .from(btns.value, { y: 30, opacity: 0, duration: 0.9 }, '-=0.7')
+
+  // Try autoplay
+  tryPlay()
+
+  // If blocked, first touch will start it
+  window.addEventListener('touchstart', tryPlay, { once: true })
 })
 </script>
 
