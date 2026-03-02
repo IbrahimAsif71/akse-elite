@@ -107,7 +107,9 @@ onMounted(() => {
 
             <div class="actions">
               <NuxtLink class="btn ghost" to="/tours">Back to Tours</NuxtLink>
-              <NuxtLink class="btn" to="/contact">Start a Project</NuxtLink>
+              <Magnetic>
+  <NuxtLink class="btn" to="/contact">Start a Project</NuxtLink>
+</Magnetic>
             </div>
           </div>
         </div>
