@@ -37,7 +37,8 @@ const handleSubmit = async () => {
 <template>
   <section class="wrap">
     <!-- IMPORTANT: This static form markup helps Netlify detect the form at build time -->
-    <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+    <form name="contact" method="POST" data-netlify="true" action="/thank-you">
+  <input type="hidden" name="form-name" value="contact" />
       <input type="text" name="name" />
       <input type="email" name="email" />
       <textarea name="message"></textarea>
