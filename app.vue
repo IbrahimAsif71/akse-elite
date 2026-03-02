@@ -5,6 +5,13 @@
 </template>
 
 <style>
+
+useHead({
+  meta: [
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+  ]
+})
+
 /* Luxury page transitions */
 .page-enter-active,
 .page-leave-active{

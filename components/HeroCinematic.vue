@@ -1,6 +1,6 @@
 <template>
   <section class="homeHero">
-    <video autoplay muted loop playsinline>
+    <video class="homeHeroBg" autoplay muted loop playsinline>
   <source src="/video/hero.mp4" type="video/mp4" />
 </video>
 
@@ -34,32 +34,33 @@ onMounted(() => {
 <style scoped>
 /* paste ALL your .homeHero CSS here */
 .homeHero{
-  position:relative;
-  min-height:100vh;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  position: relative;
+  isolation: isolate; /* IMPORTANT: prevents weird stacking with video */
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding-top: 80px;
 }
 
 .homeHeroBg{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:0;
-  filter: brightness(0.92) contrast(1.05) saturate(1.08);
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  pointer-events: none;
 }
 
 .homeHero::after{
   content:"";
   position:absolute;
   inset:0;
-  z-index:1;
+  z-index: -1;  /* between video (-2) and text (1+) */
   background:
-    radial-gradient(900px 540px at 45% 40%, rgba(0,0,0,0.18), rgba(0,0,0,0.42));
+    radial-gradient(900px 540px at 50% 45%, rgba(0,0,0,0.35), rgba(0,0,0,0.65));
 }
 
 .homeHeroOverlay{
@@ -72,8 +73,8 @@ onMounted(() => {
   max-width:1100px;
   margin:0 auto;
   width:100%;
-  min-height:100vh;
-  padding: 80px 22px 0;
+  min-height:auto;
+  padding: 0 22px;
   color:white;
   text-align:left;
 }
@@ -91,5 +92,35 @@ onMounted(() => {
   .homeHeroOverlay h1{ font-size:44px; }
   .homeHeroOverlay p{ font-size:16px; }
   .btns{ justify-content:center; }
+}
+
+
+.homeHeroOverlay h1{
+  font-size: clamp(38px, 6vw, 72px);
+  line-height: 1.1;
+}
+
+.homeHeroOverlay p{
+  font-size: clamp(15px, 2.5vw, 20px);
+  max-width: 640px;
+}
+
+@media (max-width: 768px){
+  .homeHeroOverlay{
+    align-items: center;
+    text-align: center;
+    padding: 0 18px;
+  }
+@media (max-width: 768px){
+  .homeHero{
+    padding-top: calc(80px + env(safe-area-inset-top));
+  }
+  .homeHeroOverlay{
+    padding: 0 18px;
+  }
+}
+  .btns{
+    justify-content: center;
+  }
 }
 </style>

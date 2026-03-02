@@ -15,6 +15,11 @@
 </template>
 
 <style>
+useHead({
+  meta: [
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+  ]
+})
 /* IMPORTANT: global (NOT scoped) so Netlify/prod never falls back to white */
 html, body {
   background: var(--bg) !important;
