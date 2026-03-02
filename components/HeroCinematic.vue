@@ -10,7 +10,7 @@
       webkit-playsinline
       preload="auto"
     >
-      <source src="/video/hero.mp4" type="video/mp4" />
+      <source src="/video/hero-v2.mp4" type="video/mp4" />
     </video>
 
     <div class="homeHeroOverlay">
