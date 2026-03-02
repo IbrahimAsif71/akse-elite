@@ -1,22 +1,45 @@
-<script setup>
-import { ref } from 'vue'
-const { $gsap } = useNuxtApp()
-
-const h = ref(null)
-const p = ref(null)
-
-usePageIntro(() => {
-  const tl = $gsap.timeline()
-  tl.from(h.value, { y: 40, opacity: 0, duration: 0.9, ease: 'power3.out' })
-    .from(p.value, { y: 18, opacity: 0, duration: 0.7 }, '-=0.55')
-})
-</script>
-
 <template>
-  <section class="wrap">
-    <h1 ref="h">About akse</h1>
-    <p ref="p">
-      akse preserves heritage through immersive 3D modeling, 360° pathways, and digital archiving.
-    </p>
+  <section class="contact">
+    <h1>Start a Project</h1>
+    <p>Tell us what you want to preserve. We’ll reply within 24 hours.</p>
+
+    <form
+      name="start-project"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      action="/thank-you"
+      class="form"
+    >
+      <!-- required hidden input -->
+      <input type="hidden" name="form-name" value="start-project" />
+
+      <!-- honeypot -->
+      <p style="display:none">
+        <label>Don’t fill this out: <input name="bot-field" /></label>
+      </p>
+
+      <label>
+        Name
+        <input name="name" type="text" required />
+      </label>
+
+      <label>
+        Email
+        <input name="email" type="email" required />
+      </label>
+
+      <label>
+        Phone (optional)
+        <input name="phone" type="tel" />
+      </label>
+
+      <label>
+        Message
+        <textarea name="message" rows="6" required></textarea>
+      </label>
+
+      <button type="submit" class="btn">Send</button>
+    </form>
   </section>
 </template>
