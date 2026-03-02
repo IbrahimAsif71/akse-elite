@@ -4,7 +4,7 @@
       <div class="top">
         <div class="brand">
           <h3>akse</h3>
-          <p>Building digital immortality for cultural spaces worldwide.</p>
+          <p>Building digital archives for cultural spaces worldwide.</p>
         </div>
 
         <div class="cols">
@@ -25,7 +25,7 @@
 
           <div class="col">
             <div class="hd">Contact</div>
-            <a href="mailto:hello@akse.com">hello@akse.com</a>
+            <a href="mailto:akse360@gmail.com">akse360@gmail.com</a>
             <a href="#">Islamabad / Rawalpindi</a>
             <a href="#">Pakistan</a>
           </div>
@@ -36,7 +36,14 @@
         <div class="copy">© {{ new Date().getFullYear() }} akse. All rights reserved.</div>
         <div class="mini">
           <a href="#">LinkedIn</a>
-          <a href="#">Instagram</a>
+          <a 
+  href="https://instagram.com/akse.lab" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  class="social"
+>
+  Instagram
+</a>
           <a href="#">YouTube</a>
         </div>
       </div>
