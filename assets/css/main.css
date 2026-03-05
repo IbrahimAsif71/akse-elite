@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────
+   Brand tokens + shadcn-vue semantic variables
+   Always-dark site — no light/dark toggle
+   ───────────────────────────────────────────────────── */
+
+:root {
+  /* Brand palette */
+  --bg: #0e1516;
+  --rust: #c9653d;
+  --teal: #2c7a83;
+  --text: #e2dad0;
+
+  /* shadcn-vue semantic tokens (oklch for Tailwind v4 compatibility) */
+  --background: var(--bg);
+  --foreground: var(--text);
+
+  --card: #141d1e;
+  --card-foreground: var(--text);
+
+  --popover: #141d1e;
+  --popover-foreground: var(--text);
+
+  --primary: var(--rust);
+  --primary-foreground: #fef2ec;
+
+  --secondary: var(--teal);
+  --secondary-foreground: #e8f4f5;
+
+  --muted: #1c2627;
+  --muted-foreground: rgba(226, 218, 208, 0.6);
+
+  --accent: #1c2627;
+  --accent-foreground: var(--text);
+
+  --destructive: #dc2626;
+  --destructive-foreground: #fef2f2;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: var(--rust);
+
+  --radius: 0.5rem;
+
+  color-scheme: dark;
+}
+
+/* ─────────────────────────────────────────────────────
+   Tailwind v4 theme — CSS-first config
+   Maps brand tokens to Tailwind utility classes
+   ───────────────────────────────────────────────────── */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Direct brand color utilities: text-rust, bg-teal, etc. */
+  --color-rust: var(--rust);
+  --color-teal: var(--teal);
+
+  /* Font: Geist Sans as primary */
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+
+  /* Border radius */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ─────────────────────────────────────────────────────
+   Base styles
+   ───────────────────────────────────────────────────── */
+
+html,
+body {
+  min-height: 100%;
+  background: var(--background);
+}
+
+/* ─────────────────────────────────────────────────────
+   Reduced motion — defense-in-depth CSS layer
+   GSAP + Lenis handle their own reduced-motion in JS,
+   but this catches any CSS animations/transitions.
+   ───────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

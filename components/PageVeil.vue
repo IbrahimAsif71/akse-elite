@@ -1,34 +1,58 @@
-<template>
-  <div class="veil" :class="{ on: active }" aria-hidden="true"></div>
-</template>
+<script setup lang="ts">
+const nuxtApp = useNuxtApp();
+const { $gsap } = nuxtApp;
 
-<script setup>
-import { ref } from 'vue'
+const veilRef = ref<HTMLElement | null>(null);
+const isActive = ref(false);
+let veilTimer: ReturnType<typeof setTimeout> | undefined;
 
-const active = ref(false)
-const nuxtApp = useNuxtApp()
+const prefersReduced = import.meta.client
+  ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  : false;
 
-nuxtApp.hook('page:start', () => {
-  active.value = true
-})
+const fadeDuration = prefersReduced ? 0.05 : 0.3;
 
-nuxtApp.hook('page:finish', () => {
-  // small delay makes it feel cinematic
-  setTimeout(() => (active.value = false), 180)
-})
+nuxtApp.hook("page:start", () => {
+  clearTimeout(veilTimer);
+  isActive.value = true;
+
+  if (veilRef.value && $gsap) {
+    $gsap.killTweensOf(veilRef.value);
+    $gsap.to(veilRef.value, {
+      opacity: 1,
+      duration: fadeDuration,
+      ease: "power2.inOut",
+    });
+  }
+});
+
+nuxtApp.hook("page:finish", () => {
+  clearTimeout(veilTimer);
+
+  if (veilRef.value && $gsap) {
+    $gsap.killTweensOf(veilRef.value);
+    $gsap.to(veilRef.value, {
+      opacity: 0,
+      duration: fadeDuration,
+      ease: "power2.inOut",
+      onComplete: () => {
+        isActive.value = false;
+      },
+    });
+  } else {
+    // Fallback: immediate hide
+    veilTimer = setTimeout(() => {
+      isActive.value = false;
+    }, fadeDuration * 1000);
+  }
+});
 </script>
 
-<style scoped>
-.veil{
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0;
-  transition: opacity 280ms ease;
-  background: radial-gradient(circle at 40% 20%, rgba(20,53,66,.55) 0%, rgba(8,20,26,.88) 60%, rgba(8,20,26,.95) 100%);
-}
-.veil.on{
-  opacity: 1;
-}
-</style>
+<template>
+  <div
+    ref="veilRef"
+    class="pointer-events-none fixed inset-0 z-50 bg-background"
+    :style="{ opacity: 0 }"
+    aria-hidden="true"
+  />
+</template>

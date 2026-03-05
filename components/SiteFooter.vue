@@ -1,81 +1,70 @@
+<script setup lang="ts">
+const currentYear = new Date().getFullYear();
+
+const navLinks = [
+  { label: "About", to: "/about" },
+  { label: "Tours", to: "/tours" },
+  { label: "Blog", to: "/blog" },
+  { label: "Privacy", to: "/privacy" },
+  { label: "Terms", to: "/terms" },
+];
+
+const socialLinks = [
+  { label: "Instagram", href: "#" },
+  { label: "LinkedIn", href: "#" },
+  { label: "X / Twitter", href: "#" },
+];
+</script>
+
 <template>
-  <footer class="footer">
-    <div class="inner">
-      <div class="top">
-        <div class="brand">
-          <h3>akse</h3>
-          <p>Building digital archives for cultural spaces worldwide.</p>
+  <footer class="border-t border-border bg-background">
+    <div class="mx-auto max-w-7xl px-6 py-12 md:py-16">
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+        <!-- Col 1: Brand -->
+        <div>
+          <p class="text-xl font-semibold tracking-tight text-foreground">
+            AKSE
+          </p>
+          <p class="mt-2 text-sm text-muted-foreground">
+            Heritage-tech studio crafting cinematic digital experiences.
+          </p>
+          <p class="mt-4 text-xs text-muted-foreground">
+            &copy; {{ currentYear }} AKSE. All rights reserved.
+          </p>
         </div>
 
-        <div class="cols">
-          <div class="col">
-            <div class="hd">Company</div>
-            <NuxtLink to="/about">About</NuxtLink>
-            <NuxtLink to="/blog">Blog</NuxtLink>
-            <NuxtLink to="/tours">Tours</NuxtLink>
-            <NuxtLink to="/contact">Contact</NuxtLink>
-          </div>
-
-          <div class="col">
-            <div class="hd">Legal</div>
-            <NuxtLink to="/privacy">Privacy Policy</NuxtLink>
-            <NuxtLink to="/terms">Terms</NuxtLink>
-            <NuxtLink to="/cookies">Cookies</NuxtLink>
-          </div>
-
-          <div class="col">
-            <div class="hd">Contact</div>
-            <a href="mailto:akse360@gmail.com">akse360@gmail.com</a>
-            <a href="#">Islamabad / Rawalpindi</a>
-            <a href="#">Pakistan</a>
-          </div>
+        <!-- Col 2: Navigation / Legal -->
+        <div>
+          <p class="text-sm font-medium text-foreground">Company</p>
+          <nav class="mt-3 flex flex-col gap-2" aria-label="Footer navigation">
+            <NuxtLink
+              v-for="link in navLinks"
+              :key="link.to"
+              :to="link.to"
+              class="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {{ link.label }}
+            </NuxtLink>
+          </nav>
         </div>
-      </div>
 
-      <div class="bottom">
-        <div class="copy">© {{ new Date().getFullYear() }} akse. All rights reserved.</div>
-        <div class="mini">
-          <a href="#">LinkedIn</a>
-          <a 
-  href="https://instagram.com/akse.lab" 
-  target="_blank" 
-  rel="noopener noreferrer"
-  class="social"
->
-  Instagram
-</a>
-          <a href="#">YouTube</a>
+        <!-- Col 3: Social -->
+        <div>
+          <p class="text-sm font-medium text-foreground">Social</p>
+          <nav class="mt-3 flex flex-col gap-2" aria-label="Social links">
+            <a
+              v-for="link in socialLinks"
+              :key="link.label"
+              :href="link.href"
+              class="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ link.label }}
+            </a>
+          </nav>
         </div>
       </div>
     </div>
   </footer>
 </template>
-
-<style scoped>
-.footer{
-  padding: 70px 18px 30px;
-  background:#08141A;
-  color:white;
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-.inner{ max-width:1100px; margin:0 auto; }
-.top{ display:flex; justify-content:space-between; gap: 22px; flex-wrap:wrap; }
-.brand{ max-width: 360px; }
-.brand h3{ margin:0; font-size: 22px; }
-.brand p{ margin: 10px 0 0; opacity:.85; line-height:1.7; }
-
-.cols{ display:flex; gap: 40px; flex-wrap:wrap; }
-.col{ display:flex; flex-direction:column; gap: 10px; min-width: 160px; }
-.hd{ opacity:.7; font-size: 12px; letter-spacing:1px; text-transform:uppercase; margin-bottom: 4px; }
-a{ color:white; text-decoration:none; opacity:.85; }
-a:hover{ opacity:1; color:var(--rust); }
-
-.bottom{
-  margin-top: 36px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  display:flex; justify-content:space-between; gap: 12px; flex-wrap:wrap;
-}
-.copy{ opacity:.75; }
-.mini{ display:flex; gap: 14px; }
-</style>

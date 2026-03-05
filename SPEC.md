@@ -93,7 +93,7 @@
 ### Deployment
 
 - **Netlify** (Nitro preset: `netlify`)
-- Build command: `npm run build`
+- Build command: `pnpm build`
 - Publish directory: `dist`
 
 ---
@@ -516,7 +516,7 @@ All plugins are **client-only** (`.client.ts` suffix).
 
 ```toml
 [build]
-  command = "npm run build"
+  command = "pnpm build"
   publish = "dist"
 
 [[redirects]]
