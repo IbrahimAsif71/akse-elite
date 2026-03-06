@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@nuxt/fonts": "^0.14.0",
+    "@nuxtjs/color-mode": "^4.0.0",
     "@portabletext/vue": "^1.0.14",
     "@radix-icons/vue": "^1.0.0",
     "@sanity/client": "^7.16.0",

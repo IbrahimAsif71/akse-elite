@@ -42,8 +42,10 @@ failures.
 Tailwind CSS and shadcn-vue are the mandatory UI foundation. Structural layout and component
 styling MUST be implemented with Tailwind utilities and shadcn variants; raw CSS is limited to
 token declarations, animation keyframes, or unavoidable browser-specific fixes. The visual brand
-MUST preserve the cinematic dark identity with Base `#0e1516`, Rust `#C9653D`, and Teal
-`#2C7A83`, and MUST implement a premium font pairing (body + display heading) consistently
+We are implementing a strict Dual-Theme architecture using @nuxtjs/color-mode (class strategy).
+Dark Mode (Legacy): Cinematic, Base: #0e1516, Accents: Rust (#C9653D) and Teal (#2C7A83).
+Light Mode (New): Modern/Earthy, Base: Beige/Light Neutral, Accent: Orange.
+and MUST implement a premium font pairing (body + display heading) consistently
 across pages.
 Rationale: A unified design system preserves premium brand continuity while improving delivery
 speed and consistency.

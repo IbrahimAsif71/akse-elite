@@ -22,9 +22,13 @@ const socialLinks = [
       <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
         <!-- Col 1: Brand -->
         <div>
-          <p class="text-xl font-semibold tracking-tight text-foreground">
-            AKSE
-          </p>
+          <img
+            src="/akse.png"
+            alt="AKSE"
+            width="2618"
+            height="864"
+            class="h-6 w-auto"
+          />
           <p class="mt-2 text-sm text-muted-foreground">
             Heritage-tech studio crafting cinematic digital experiences.
           </p>

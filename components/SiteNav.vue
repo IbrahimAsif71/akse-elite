@@ -7,6 +7,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
+import ThemeToggle from "@/components/ThemeToggle.vue";
 
 const route = useRoute();
 const { $gsap } = useNuxtApp();
@@ -83,17 +84,14 @@ onMounted(() => {
   >
     <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
       <!-- Logo -->
-      <NuxtLink to="/" class="flex items-center gap-2" aria-label="AKSE — Home">
+      <NuxtLink to="/" class="flex items-center" aria-label="AKSE — Home">
         <img
-          src="/logo-placeholder.svg"
+          src="/akse.png"
           alt=""
-          width="32"
-          height="32"
-          class="text-foreground"
+          width="2618"
+          height="864"
+          class="h-7 w-auto md:h-8"
         />
-        <span class="text-lg font-semibold tracking-tight text-foreground">
-          AKSE
-        </span>
       </NuxtLink>
 
       <!-- Desktop nav -->
@@ -120,20 +118,22 @@ onMounted(() => {
         <!-- Animated underline -->
         <div
           ref="underlineRef"
-          class="absolute bottom-0 left-0 h-[2px] bg-primary"
+          class="absolute bottom-0 left-0 h-0.5 bg-primary"
           :style="{ width: '0px' }"
         />
       </nav>
 
-      <!-- CTA (desktop) -->
-      <div class="hidden md:block">
+      <!-- Desktop controls -->
+      <div class="hidden items-center gap-2 md:flex">
+        <ThemeToggle />
         <Button as-child>
           <NuxtLink to="/contact"> Start Project </NuxtLink>
         </Button>
       </div>
 
-      <!-- Mobile hamburger -->
-      <div class="md:hidden">
+      <!-- Mobile controls -->
+      <div class="flex items-center gap-1 md:hidden">
+        <ThemeToggle />
         <Sheet v-model:open="drawerOpen">
           <button
             class="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground hover:text-foreground"

@@ -2,46 +2,89 @@
 
 /* ─────────────────────────────────────────────────────
    Brand tokens + shadcn-vue semantic variables
-   Always-dark site — no light/dark toggle
+   Dual-theme architecture driven by .dark class
    ───────────────────────────────────────────────────── */
 
 :root {
-  /* Brand palette */
-  --bg: #0e1516;
-  --rust: #c9653d;
+  --bg: #f3ebdf;
+  --surface: #fbf6ee;
+  --surface-alt: #ece2d2;
+  --text: #2f261e;
+  --text-muted: #6b5a49;
+  --orange: #c9653d;
+  --orange-foreground: #fff7ef;
   --teal: #2c7a83;
-  --text: #e2dad0;
 
-  /* shadcn-vue semantic tokens (oklch for Tailwind v4 compatibility) */
   --background: var(--bg);
   --foreground: var(--text);
 
-  --card: #141d1e;
+  --card: var(--surface);
   --card-foreground: var(--text);
 
-  --popover: #141d1e;
+  --popover: var(--surface);
   --popover-foreground: var(--text);
 
-  --primary: var(--rust);
-  --primary-foreground: #fef2ec;
+  --primary: var(--orange);
+  --primary-foreground: var(--orange-foreground);
+
+  --secondary: #e2d4c0;
+  --secondary-foreground: #3b3026;
+
+  --muted: var(--surface-alt);
+  --muted-foreground: var(--text-muted);
+
+  --accent: #f0e4d3;
+  --accent-foreground: #32271f;
+
+  --destructive: #b91c1c;
+  --destructive-foreground: #fff5f5;
+
+  --border: #d9cab4;
+  --input: #d9cab4;
+  --ring: var(--orange);
+
+  --radius: 0.5rem;
+
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0e1516;
+  --surface: #141d1e;
+  --surface-alt: #1c2627;
+  --text: #f3ede7;
+  --text-muted: rgba(243, 237, 231, 0.68);
+  --orange: #c9653d;
+  --orange-foreground: #fef2ec;
+  --teal: #2c7a83;
+
+  --background: var(--bg);
+  --foreground: var(--text);
+
+  --card: var(--surface);
+  --card-foreground: var(--text);
+
+  --popover: var(--surface);
+  --popover-foreground: var(--text);
+
+  --primary: var(--orange);
+  --primary-foreground: var(--orange-foreground);
 
   --secondary: var(--teal);
   --secondary-foreground: #e8f4f5;
 
-  --muted: #1c2627;
-  --muted-foreground: rgba(226, 218, 208, 0.6);
+  --muted: var(--surface-alt);
+  --muted-foreground: var(--text-muted);
 
-  --accent: #1c2627;
+  --accent: var(--surface-alt);
   --accent-foreground: var(--text);
 
   --destructive: #dc2626;
   --destructive-foreground: #fef2f2;
 
-  --border: rgba(255, 255, 255, 0.1);
-  --input: rgba(255, 255, 255, 0.1);
-  --ring: var(--rust);
-
-  --radius: 0.5rem;
+  --border: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: var(--orange);
 
   color-scheme: dark;
 }
@@ -73,8 +116,9 @@
   --color-ring: var(--ring);
 
   /* Direct brand color utilities: text-rust, bg-teal, etc. */
-  --color-rust: var(--rust);
+  --color-rust: var(--orange);
   --color-teal: var(--teal);
+  --color-orange: var(--orange);
 
   /* Font: Geist Sans as primary */
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
@@ -94,6 +138,7 @@ html,
 body {
   min-height: 100%;
   background: var(--background);
+  color: var(--foreground);
 }
 
 /* ─────────────────────────────────────────────────────
