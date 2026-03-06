@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -126,9 +126,12 @@ onMounted(() => {
       <!-- Desktop controls -->
       <div class="hidden items-center gap-2 md:flex">
         <ThemeToggle />
-        <Button as-child>
-          <NuxtLink to="/contact"> Start Project </NuxtLink>
-        </Button>
+        <NuxtLink
+          to="/contact"
+          :class="buttonVariants({ variant: 'default' })"
+        >
+          Start Project
+        </NuxtLink>
       </div>
 
       <!-- Mobile controls -->
@@ -186,11 +189,13 @@ onMounted(() => {
             </nav>
 
             <div class="mt-6 px-3">
-              <Button as-child class="w-full">
-                <NuxtLink to="/contact" @click="drawerOpen = false">
-                  Start Project
-                </NuxtLink>
-              </Button>
+              <NuxtLink
+                to="/contact"
+                :class="buttonVariants({ variant: 'default', class: 'w-full' })"
+                @click="drawerOpen = false"
+              >
+                Start Project
+              </NuxtLink>
             </div>
           </SheetContent>
         </Sheet>
