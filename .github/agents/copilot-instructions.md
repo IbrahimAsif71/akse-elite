@@ -7,6 +7,8 @@ Auto-generated from all feature plans. Last updated: 2026-03-05
 - N/A (static asset in `public/`) (002-site-logo)
 - TypeScript (Nuxt 4 + Vue 3 Composition API with `script setup`) + Nuxt 4, Tailwind CSS 4, shadcn-nuxt, `@nuxtjs/color-mode` (new), GSAP, Lenis (001-global-theme-system)
 - Browser local preference storage managed by Nuxt color mode module (001-global-theme-system)
+- TypeScript (Nuxt 4 / Vue 3 Composition API) + Nuxt 4, Vue 3, Tailwind CSS v4, shadcn-vue, GSAP 3.14.x + ScrollTrigger, Lenis 1.3.x, cobe 0.6.x (new), @nuxtjs/color-mode 4.x (004-awwwards-home-page)
+- N/A — all data is static mock arrays (004-awwwards-home-page)
 
 - TypeScript (Nuxt 4 / Vue 3 Composition API with `script setup`) + Nuxt 4, Tailwind CSS 4, shadcn-vue, GSAP, lenis (modern package), Geist Sans fon (001-core-layout-foundation)
 
@@ -27,10 +29,10 @@ pnpm test && pnpm lint
 TypeScript (Nuxt 4 / Vue 3 Composition API with `script setup`): Follow standard conventions
 
 ## Recent Changes
+- 004-awwwards-home-page: Added TypeScript (Nuxt 4 / Vue 3 Composition API) + Nuxt 4, Vue 3, Tailwind CSS v4, shadcn-vue, GSAP 3.14.x + ScrollTrigger, Lenis 1.3.x, cobe 0.6.x (new), @nuxtjs/color-mode 4.x
+- 004-awwwards-home-page: Added [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
 - 001-global-theme-system: Added TypeScript (Nuxt 4 + Vue 3 Composition API with `script setup`) + Nuxt 4, Tailwind CSS 4, shadcn-nuxt, `@nuxtjs/color-mode` (new), GSAP, Lenis
-- 002-site-logo: Added TypeScript (Nuxt 4 / Vue 3 Composition API with `script setup`) + Nuxt 4, Tailwind CSS 4, shadcn-vue (existing — no new deps)
 
-- 001-core-layout-foundation: Added TypeScript (Nuxt 4 / Vue 3 Composition API with `script setup`) + Nuxt 4, Tailwind CSS 4, shadcn-vue, GSAP, lenis (modern package), Geist Sans fon
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->
