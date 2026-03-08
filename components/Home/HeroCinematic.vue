@@ -20,6 +20,9 @@ let arcAnimationId: number | null = null;
 const PAKISTAN_PHI = 3.6; // tuned to face ~73°E (Pakistan)
 const PAKISTAN_THETA = 0.3; // slight northern tilt for ~30°N
 
+let currentPhiDelta = 0;
+let currentThetaDelta = 0;
+
 // 3 destination cities in Pakistan
 const ISLAMABAD: [number, number] = [33.6844, 73.0479];
 const LAHORE: [number, number] = [31.5497, 74.3436];
@@ -114,10 +117,17 @@ function drawArcs(timestamp: number) {
     const srcX = cx + Math.cos(arc.edgeAngle) * radius * 0.95;
     const srcY = cy + Math.sin(arc.edgeAngle) * radius * 0.95;
 
-    // Destination: fixed position relative to globe center
+    // Destination: fixed position relative to globe center + offset for rotation
+    // When phi increases, camera moves East, globe rotates West (rx decreases)
+    // When theta increases, camera tilts North, globe tilts South (ry increases)
     const dst = DST_POSITIONS[arc.dstIdx]!;
-    const dstX = cx + dst.rx * radius;
-    const dstY = cy + dst.ry * radius;
+    
+    // Apply offsets so the arcs track the moving destinations on the rotating globe
+    const dynamicRx = dst.rx - currentPhiDelta * 1.1; 
+    const dynamicRy = dst.ry + currentThetaDelta * 1.1;
+
+    const dstX = cx + dynamicRx * radius;
+    const dstY = cy + dynamicRy * radius;
 
     // Compute control point for curved arc
     const midX = (srcX + dstX) / 2;
@@ -216,9 +226,8 @@ function getGlobeTheme(mode: string) {
       ? ([0.055, 0.082, 0.086] as [number, number, number])
       : ([0.953, 0.922, 0.875] as [number, number, number]),
     markerColor: [0.788, 0.396, 0.239] as [number, number, number],
-    glowColor: isDark
-      ? ([0.173, 0.478, 0.514] as [number, number, number])
-      : ([0.788, 0.396, 0.239] as [number, number, number]),
+    // Use the primary brand color (copper/orange) for the space glow in both modes
+    glowColor: [0.788, 0.396, 0.239] as [number, number, number],
     dark: isDark ? 1 : 0,
   };
 }
@@ -254,9 +263,13 @@ function initGlobe() {
       glowColor: theme.glowColor,
       markers: MARKERS,
       onRender: (state) => {
-        // Globe is locked on Pakistan — no rotation
-        state.phi = PAKISTAN_PHI;
-        state.theta = PAKISTAN_THETA;
+        // "Loopy loopy" rotation — slightly rotating forward and back
+        const t = performance.now() / 3000;
+        currentPhiDelta = Math.sin(t) * 0.15; // smooth horizontal oscillation
+        currentThetaDelta = Math.cos(t * 0.8) * 0.08; // smooth vertical oscillation
+
+        state.phi = PAKISTAN_PHI + currentPhiDelta;
+        state.theta = PAKISTAN_THETA + currentThetaDelta;
         state.width = canvasRef.value ? canvasRef.value.offsetWidth * 2 : 600;
         state.height = canvasRef.value ? canvasRef.value.offsetHeight * 2 : 600;
       },
@@ -375,11 +388,20 @@ onBeforeUnmount(() => {
 
     <!-- Globe — hidden on mobile, visible on md+ -->
     <div
-      class="absolute right-0 top-1/2 -translate-y-1/2 hidden md:block md:w-[500px] md:h-[500px] lg:w-[650px] lg:h-[650px] xl:w-[700px] xl:h-[700px] opacity-80"
+      class="absolute right-0 top-1/2 -translate-y-1/2 hidden md:block md:w-[500px] md:h-[500px] lg:w-[650px] lg:h-[650px] xl:w-[700px] xl:h-[700px]"
     >
+      <!-- Deep space gradient glow behind the globe -->
+      <div 
+        class="absolute inset-0 -z-10 rounded-full bg-primary/20 blur-[80px]" 
+        style="transform: scale(0.85);"
+      ></div>
+      <div 
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] -z-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/15 via-primary/5 to-transparent pointer-events-none"
+      ></div>
+
       <ClientOnly>
         <div
-          class="relative h-full w-full"
+          class="relative h-full w-full opacity-90"
           aria-label="Globe showing AKSE locations in Pakistan"
           role="img"
         >
