@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import createGlobe from "cobe";
+import Aurora from "./Aurora.vue";
 
 const { $gsap } = useNuxtApp();
 const colorMode = useColorMode();
@@ -329,9 +330,21 @@ onBeforeUnmount(() => {
   <section
     class="relative flex min-h-screen items-center overflow-hidden bg-background"
   >
+    <!-- Deep space Aurora background -->
+    <div class="absolute inset-0 z-0 opacity-50 dark:opacity-80">
+      <Aurora
+        :color-stops="['#C9653D', '#0E1516', '#C9653D']"
+        :amplitude="1.2"
+        :blend="0.6"
+        :speed="0.8"
+        :intensity="1.5"
+        class="h-full w-full"
+      />
+    </div>
+
     <!-- Text content -->
-    <div class="relative z-10 mx-auto w-full max-w-7xl px-6 py-24 lg:px-12">
-      <div class="max-w-2xl">
+    <div class="relative z-10 mx-auto w-full max-w-7xl px-6 py-24 lg:px-12 pointer-events-none">
+      <div class="max-w-2xl pointer-events-auto">
         <!-- Headline with word-level character reveal (no mid-word breaks) -->
         <h1 ref="headlineContainer" class="overflow-hidden">
           <span
@@ -388,15 +401,12 @@ onBeforeUnmount(() => {
 
     <!-- Globe — hidden on mobile, visible on md+ -->
     <div
-      class="absolute right-0 top-1/2 -translate-y-1/2 hidden md:block md:w-[500px] md:h-[500px] lg:w-[650px] lg:h-[650px] xl:w-[700px] xl:h-[700px]"
+      class="absolute right-0 top-1/2 -translate-y-1/2 hidden md:block md:w-[500px] md:h-[500px] lg:w-[650px] lg:h-[650px] xl:w-[700px] xl:h-[700px] pointer-events-none"
     >
-      <!-- Deep space gradient glow behind the globe -->
+      <!-- Optional: Soft glow behind globe to emphasize it over the aurora -->
       <div 
-        class="absolute inset-0 -z-10 rounded-full bg-primary/20 blur-[80px]" 
-        style="transform: scale(0.85);"
-      ></div>
-      <div 
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] -z-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/15 via-primary/5 to-transparent pointer-events-none"
+        class="absolute inset-0 -z-10 rounded-full bg-primary/10 blur-[60px]" 
+        style="transform: scale(0.9);"
       ></div>
 
       <ClientOnly>
