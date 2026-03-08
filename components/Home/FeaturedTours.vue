@@ -57,7 +57,7 @@ const imageRefs: Ref<HTMLElement[]> = ref([]);
 const triggers: any[] = [];
 
 // Staggered vertical offsets for asymmetric layout
-const offsets = ["mt-0", "mt-16", "mt-8", "mt-24"];
+const offsets = ["mt-0", "lg:mt-16", "lg:mt-8", "lg:mt-24"];
 
 onMounted(() => {
   if (!imageRefs.value.length) return;

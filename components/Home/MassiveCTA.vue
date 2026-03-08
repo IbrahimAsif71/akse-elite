@@ -4,7 +4,7 @@
 
 <template>
   <section
-    class="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-24"
+    class="relative flex min-h-[60vh] md:min-h-screen items-center justify-center overflow-hidden px-6 py-16 md:py-24"
     :style="{
       background: `linear-gradient(135deg, var(--orange) 0%, var(--teal) 100%)`,
     }"
