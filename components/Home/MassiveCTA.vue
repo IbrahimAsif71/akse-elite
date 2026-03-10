@@ -21,15 +21,12 @@
         experiences that command attention.
       </p>
       <div class="mt-10">
-        <MagneticWrapper>
-          <NuxtLink
-            to="/contact"
-            class="inline-flex items-center rounded-xl bg-white px-8 py-4 text-base font-bold text-foreground shadow-lg transition-transform hover:shadow-xl"
-            data-cursor="action"
-          >
-            Book a Tour
-          </NuxtLink>
-        </MagneticWrapper>
+        <NuxtLink
+          to="/contact"
+          class="inline-flex items-center rounded-xl bg-white px-8 py-4 text-base font-bold text-foreground shadow-lg transition-transform hover:shadow-xl"
+        >
+          Book a Tour
+        </NuxtLink>
       </div>
     </div>
   </section>

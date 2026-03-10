@@ -3,7 +3,6 @@ import createGlobe from "cobe";
 import Aurora from "./Aurora.vue";
 
 const { $gsap } = useNuxtApp();
-const colorMode = useColorMode();
 
 // ── Word-level reveal setup ──
 const words = ["Heritage", "Redefined"];
@@ -122,9 +121,9 @@ function drawArcs(timestamp: number) {
     // When phi increases, camera moves East, globe rotates West (rx decreases)
     // When theta increases, camera tilts North, globe tilts South (ry increases)
     const dst = DST_POSITIONS[arc.dstIdx]!;
-    
+
     // Apply offsets so the arcs track the moving destinations on the rotating globe
-    const dynamicRx = dst.rx - currentPhiDelta * 1.1; 
+    const dynamicRx = dst.rx - currentPhiDelta * 1.1;
     const dynamicRy = dst.ry + currentThetaDelta * 1.1;
 
     const dstX = cx + dynamicRx * radius;
@@ -220,16 +219,12 @@ function initArcCanvas() {
   arcAnimationId = requestAnimationFrame(drawArcs);
 }
 
-function getGlobeTheme(mode: string) {
-  const isDark = mode === "dark";
+function getGlobeTheme() {
   return {
-    baseColor: isDark
-      ? ([0.055, 0.082, 0.086] as [number, number, number])
-      : ([0.953, 0.922, 0.875] as [number, number, number]),
+    baseColor: [0.953, 0.922, 0.875] as [number, number, number],
     markerColor: [0.788, 0.396, 0.239] as [number, number, number],
-    // Use the primary brand color (copper/orange) for the space glow in both modes
     glowColor: [0.788, 0.396, 0.239] as [number, number, number],
-    dark: isDark ? 1 : 0,
+    dark: 0,
   };
 }
 
@@ -246,7 +241,7 @@ function initGlobe() {
     globeInstance = null;
   }
 
-  const theme = getGlobeTheme(colorMode.value);
+  const theme = getGlobeTheme();
 
   try {
     globeInstance = createGlobe(canvasRef.value, {
@@ -306,14 +301,6 @@ onMounted(() => {
   });
 });
 
-// Theme change → recreate globe
-watch(
-  () => colorMode.value,
-  () => {
-    initGlobe();
-  },
-);
-
 onBeforeUnmount(() => {
   if (globeInstance) {
     globeInstance.destroy();
@@ -331,9 +318,9 @@ onBeforeUnmount(() => {
     class="relative flex min-h-screen items-center overflow-hidden bg-background"
   >
     <!-- Deep space Aurora background -->
-    <div class="absolute inset-0 z-0 opacity-50 dark:opacity-80">
+    <div class="absolute inset-0 z-0 opacity-50">
       <Aurora
-        :color-stops="['#C9653D', '#0E1516', '#C9653D']"
+        :color-stops="['#C9653D', '#3b2e1f', '#C9653D']"
         :amplitude="1.2"
         :blend="0.6"
         :speed="0.8"
@@ -343,7 +330,9 @@ onBeforeUnmount(() => {
     </div>
 
     <!-- Text content -->
-    <div class="relative z-10 mx-auto w-full max-w-7xl px-6 py-24 lg:px-12 pointer-events-none">
+    <div
+      class="relative z-10 mx-auto w-full max-w-7xl px-6 py-24 lg:px-12 pointer-events-none"
+    >
       <div class="max-w-2xl pointer-events-auto">
         <!-- Headline with word-level character reveal (no mid-word breaks) -->
         <h1 ref="headlineContainer" class="overflow-hidden">
@@ -404,9 +393,9 @@ onBeforeUnmount(() => {
       class="absolute right-0 top-1/2 -translate-y-1/2 hidden md:block md:w-[500px] md:h-[500px] lg:w-[650px] lg:h-[650px] xl:w-[700px] xl:h-[700px] pointer-events-none"
     >
       <!-- Optional: Soft glow behind globe to emphasize it over the aurora -->
-      <div 
-        class="absolute inset-0 -z-10 rounded-full bg-primary/10 blur-[60px]" 
-        style="transform: scale(0.9);"
+      <div
+        class="absolute inset-0 -z-10 rounded-full bg-primary/10 blur-[60px]"
+        style="transform: scale(0.9)"
       ></div>
 
       <ClientOnly>

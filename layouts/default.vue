@@ -7,7 +7,6 @@
     <SiteNav />
     <ScrollProgress />
     <PageVeil />
-    <CustomCursor />
 
     <main class="relative z-[1]">
       <slot />

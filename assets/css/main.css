@@ -2,7 +2,7 @@
 
 /* ─────────────────────────────────────────────────────
    Brand tokens + shadcn-vue semantic variables
-   Dual-theme architecture driven by .dark class
+   Earthy light-only theme
    ───────────────────────────────────────────────────── */
 
 :root {
@@ -46,47 +46,6 @@
   --radius: 0.5rem;
 
   color-scheme: light;
-}
-
-.dark {
-  --bg: #0e1516;
-  --surface: #141d1e;
-  --surface-alt: #1c2627;
-  --text: #f3ede7;
-  --text-muted: rgba(243, 237, 231, 0.68);
-  --orange: #c9653d;
-  --orange-foreground: #fef2ec;
-  --teal: #2c7a83;
-
-  --background: var(--bg);
-  --foreground: var(--text);
-
-  --card: var(--surface);
-  --card-foreground: var(--text);
-
-  --popover: var(--surface);
-  --popover-foreground: var(--text);
-
-  --primary: var(--orange);
-  --primary-foreground: var(--orange-foreground);
-
-  --secondary: var(--teal);
-  --secondary-foreground: #e8f4f5;
-
-  --muted: var(--surface-alt);
-  --muted-foreground: var(--text-muted);
-
-  --accent: var(--surface-alt);
-  --accent-foreground: var(--text);
-
-  --destructive: #dc2626;
-  --destructive-foreground: #fef2f2;
-
-  --border: rgba(255, 255, 255, 0.12);
-  --input: rgba(255, 255, 255, 0.12);
-  --ring: var(--orange);
-
-  color-scheme: dark;
 }
 
 /* ─────────────────────────────────────────────────────
