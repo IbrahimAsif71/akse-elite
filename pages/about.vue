@@ -15,6 +15,6 @@ useSeoMeta({
     <AboutMissionStatement />
     <AboutProcessTimeline />
     <AboutTechShowcase />
-    <AboutAboutCTA />
+    <AboutCTA />
   </div>
 </template>

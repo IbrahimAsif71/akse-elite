@@ -94,7 +94,9 @@ onBeforeUnmount(() => {
       <!-- Pillars -->
       <div class="grid gap-16 md:grid-cols-3 md:gap-12">
         <div v-for="pillar in pillars" :key="pillar.word">
-          <h3 class="text-6xl font-bold text-primary md:text-8xl lg:text-9xl">
+          <h3
+            class="break-words text-4xl font-bold tracking-tight text-primary md:text-5xl lg:text-6xl"
+          >
             {{ pillar.word }}
           </h3>
           <p class="mt-2 text-base text-muted-foreground">
