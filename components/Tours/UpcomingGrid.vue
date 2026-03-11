@@ -1,88 +1,37 @@
 <script setup lang="ts">
 import { Card, CardContent } from "~/components/ui/card";
 
-const props = defineProps<{ activeCategory: string }>();
+interface Tour {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  category?: string;
+  location?: string;
+  summary?: string;
+  heroImage?: any;
+  status?: string;
+}
+
+const props = defineProps<{
+  tours: Tour[];
+  activeCategory: string;
+  urlFor: (source: any) => { width: (w: number) => { url: () => string } };
+}>();
 
 const { $gsap, $ScrollTrigger } = useNuxtApp();
 const gridRef = ref<HTMLElement>();
 let batchTriggers: ScrollTrigger[] = [];
 
-interface Tour {
-  id: string;
-  title: string;
-  location: string;
-  category: string;
-  image: string;
-  status: "live" | "in-production";
-  badgeLabel: string;
-  ctaLink?: string;
+function isLive(tour: Tour) {
+  return (tour.status || "").toLowerCase() !== "in-production";
 }
 
-const allTours: Tour[] = [
-  {
-    id: "golra-sharif",
-    title: "Golra Sharif Railway Museum",
-    location: "Rawalpindi, Punjab",
-    category: "museums",
-    image: "/images/tours/rohtas_fort_heritage_1773010968806.png",
-    status: "live",
-    badgeLabel: "Live",
-    ctaLink: "/tours/golra-sharif",
-  },
-  {
-    id: "lahore-fort",
-    title: "Lahore Fort",
-    location: "Lahore, Punjab",
-    category: "heritage-sites",
-    image: "/images/tours/lahore_old_city_heritage_1773010984542.png",
-    status: "in-production",
-    badgeLabel: "In Production",
-  },
-  {
-    id: "mohenjo-daro",
-    title: "Mohenjo-Daro",
-    location: "Larkana, Sindh",
-    category: "heritage-sites",
-    image: "/images/tours/hunza_valley_adventure_1773011000439.png",
-    status: "in-production",
-    badgeLabel: "In Production",
-  },
-  {
-    id: "faisal-mosque",
-    title: "Faisal Mosque",
-    location: "Islamabad, ICT",
-    category: "heritage-sites",
-    image: "/images/tours/rohtas_fort_heritage_1773010968806.png",
-    status: "in-production",
-    badgeLabel: "In Production",
-  },
-  {
-    id: "taxila-museum",
-    title: "Taxila Museum",
-    location: "Taxila, Punjab",
-    category: "museums",
-    image: "/images/tours/taxila_museum_heritage_1773011014212.png",
-    status: "in-production",
-    badgeLabel: "In Production",
-  },
-  {
-    id: "pearl-continental",
-    title: "Pearl Continental Lobby",
-    location: "Lahore, Punjab",
-    category: "commercial",
-    image: "/images/tours/lahore_old_city_heritage_1773010984542.png",
-    status: "in-production",
-    badgeLabel: "In Production",
-  },
-];
-
-const filteredTours = computed(() => {
-  if (props.activeCategory === "all") return allTours;
-  if (props.activeCategory === "in-production") {
-    return allTours.filter((t) => t.status === "in-production");
+function tourImage(tour: Tour) {
+  if (tour.heroImage) {
+    return props.urlFor(tour.heroImage).width(1400).url();
   }
-  return allTours.filter((t) => t.category === props.activeCategory);
-});
+  return "/images/tours/rohtas_fort_heritage_1773010968806.png";
+}
 
 function setupBatch() {
   killBatch();
@@ -90,7 +39,6 @@ function setupBatch() {
   const cards = gridRef.value.querySelectorAll(".tour-card");
   if (!cards.length) return;
 
-  // Set initial state
   $gsap.set(cards, { y: 60, opacity: 0 });
 
   batchTriggers = $ScrollTrigger.batch(cards, {
@@ -136,24 +84,24 @@ onUnmounted(() => {
 <template>
   <section ref="gridRef" class="mx-auto max-w-7xl px-6 py-16">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-      <template v-for="tour in filteredTours" :key="tour.id">
+      <template v-for="tour in tours" :key="tour._id">
         <!-- Live tour card -->
         <NuxtLink
-          v-if="tour.status === 'live'"
-          :to="tour.ctaLink!"
+          v-if="isLive(tour)"
+          :to="`/tours/${tour.slug.current}`"
           class="tour-card"
         >
           <Card class="group overflow-hidden transition-shadow hover:shadow-lg">
             <div class="relative aspect-4/3 overflow-hidden">
               <img
-                :src="tour.image"
+                :src="tourImage(tour)"
                 :alt="tour.title"
                 class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <span
                 class="absolute left-3 top-3 rounded-full bg-teal px-3 py-1 text-xs font-semibold text-white"
               >
-                {{ tour.badgeLabel }}
+                Live
               </span>
             </div>
             <CardContent class="p-4">
@@ -172,14 +120,14 @@ onUnmounted(() => {
           <Card class="overflow-hidden">
             <div class="relative aspect-4/3 overflow-hidden">
               <img
-                :src="tour.image"
+                :src="tourImage(tour)"
                 :alt="tour.title"
                 class="h-full w-full object-cover blur-sm grayscale"
               />
               <span
                 class="badge-pulse absolute left-3 top-3 rounded-full bg-primary/80 px-3 py-1 text-xs font-semibold text-primary-foreground"
               >
-                {{ tour.badgeLabel }}
+                In Production
               </span>
             </div>
             <CardContent class="p-4">
