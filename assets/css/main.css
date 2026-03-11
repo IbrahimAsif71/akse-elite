@@ -49,6 +49,52 @@
 }
 
 /* ─────────────────────────────────────────────────────
+   Dark theme — cinematic palette
+   Activated by @nuxtjs/color-mode adding .dark to <html>
+   ───────────────────────────────────────────────────── */
+
+.dark {
+  --bg: #0e1516;
+  --surface: rgba(10, 12, 13, 0.34);
+  --surface-alt: rgba(10, 12, 13, 0.46);
+  --text: #f3ede7;
+  --text-muted: rgba(243, 237, 231, 0.78);
+  --orange: #c9653d;
+  --orange-foreground: #fff7ef;
+  --teal: #2c7a83;
+
+  --background: var(--bg);
+  --foreground: var(--text);
+
+  --card: #141e1f;
+  --card-foreground: var(--text);
+
+  --popover: #141e1f;
+  --popover-foreground: var(--text);
+
+  --primary: var(--orange);
+  --primary-foreground: var(--orange-foreground);
+
+  --secondary: #1e2a2b;
+  --secondary-foreground: #d4cdc6;
+
+  --muted: #1a2425;
+  --muted-foreground: var(--text-muted);
+
+  --accent: #1e2829;
+  --accent-foreground: #e8e0d6;
+
+  --destructive: #dc2626;
+  --destructive-foreground: #fff5f5;
+
+  --border: #2a3839;
+  --input: #2a3839;
+  --ring: var(--orange);
+
+  color-scheme: dark;
+}
+
+/* ─────────────────────────────────────────────────────
    Tailwind v4 theme — CSS-first config
    Maps brand tokens to Tailwind utility classes
    ───────────────────────────────────────────────────── */

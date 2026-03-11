@@ -33,9 +33,9 @@ pnpm test && pnpm lint
 TypeScript (Nuxt 4 / Vue 3 Composition API with `script setup`): Follow standard conventions
 
 ## Recent Changes
+- 007-tours-portal: Added TypeScript (Nuxt 4 / Vue 3 Composition API) + Nuxt 4, Vue 3, Tailwind CSS v4, shadcn-vue, GSAP 3.14.x + ScrollTrigger (existing `gsap.client.ts`), Lenis 1.3.x (existing `lenis.client.ts`)
 - 006-earthy-theme-cleanup: Added TypeScript (Nuxt 4 / Vue 3 Composition API) + Nuxt 4, Tailwind CSS v4, shadcn-vue, GSAP 3, Lenis, cobe (globe), Sanity clien
 - 005-about-process-page: Added TypeScript (Nuxt 4 / Vue 3 Composition API) + Nuxt 4, Vue 3, Tailwind CSS v4, shadcn-vue, GSAP 3.14.x + ScrollTrigger (existing `gsap.client.ts`), Lenis 1.3.x (existing `lenis.client.ts`), @nuxtjs/color-mode 4.x
-- 004-awwwards-home-page: Added TypeScript (Nuxt 4 / Vue 3 Composition API) + Nuxt 4, Vue 3, Tailwind CSS v4, shadcn-vue, GSAP 3.14.x + ScrollTrigger, Lenis 1.3.x, cobe 0.6.x (new), @nuxtjs/color-mode 4.x
 
 
 <!-- MANUAL ADDITIONS START -->
