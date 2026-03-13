@@ -46,7 +46,7 @@ onUnmounted(() => {
 
 <template>
   <footer
-    class="relative overflow-hidden border-t border-border bg-background pt-20 text-foreground pb-8 md:pt-32"
+    class="relative overflow-hidden border-t border-border bg-foreground pt-20 text-background pb-8 md:pt-32"
   >
     <div class="relative z-10 mx-auto max-w-7xl px-6">
       <!-- Top Section -->
@@ -64,7 +64,7 @@ onUnmounted(() => {
               class="mb-6 h-8 w-auto md:h-10"
             />
             <h3
-              class="max-w-md text-2xl font-light leading-tight text-foreground/90 md:text-4xl"
+              class="max-w-md text-2xl font-light leading-tight text-background/90 md:text-4xl"
             >
               Crafting cinematic digital experiences for heritage and beyond.
             </h3>
@@ -77,7 +77,7 @@ onUnmounted(() => {
             >
               hello@akse.studio
               <span
-                class="absolute -bottom-1 left-0 h-[2px] w-0 bg-primary transition-all duration-300 group-hover:w-full"
+                class="absolute -bottom-1 left-0 h-0.5 w-0 bg-primary transition-all duration-300 group-hover:w-full"
               ></span>
             </a>
           </div>
@@ -88,7 +88,7 @@ onUnmounted(() => {
         <!-- Links -->
         <div class="md:col-span-2">
           <h4
-            class="mb-6 text-xs font-bold uppercase tracking-widest text-muted-foreground"
+            class="mb-6 text-xs font-bold uppercase tracking-widest text-muted-background"
           >
             Explore
           </h4>
@@ -97,11 +97,11 @@ onUnmounted(() => {
               v-for="link in navLinks"
               :key="link.to"
               :to="link.to"
-              class="group relative w-fit text-lg font-medium text-foreground/80 transition-colors hover:text-foreground md:text-xl"
+              class="group relative w-fit text-lg font-medium text-background/80 transition-colors hover:text-background md:text-xl"
             >
               {{ link.label }}
               <span
-                class="absolute -bottom-1 left-0 h-[1px] w-0 bg-foreground transition-all duration-300 group-hover:w-full"
+                class="absolute -bottom-1 left-0 h-px w-0 bg-foreground transition-all duration-300 group-hover:w-full"
               ></span>
             </NuxtLink>
           </nav>
@@ -110,7 +110,7 @@ onUnmounted(() => {
         <!-- Socials -->
         <div class="md:col-span-2">
           <h4
-            class="mb-6 text-xs font-bold uppercase tracking-widest text-muted-foreground"
+            class="mb-6 text-xs font-bold uppercase tracking-widest text-muted-background"
           >
             Socials
           </h4>
@@ -119,13 +119,13 @@ onUnmounted(() => {
               v-for="link in socialLinks"
               :key="link.label"
               :href="link.href"
-              class="group relative w-fit text-lg font-medium text-foreground/80 transition-colors hover:text-foreground md:text-xl"
+              class="group relative w-fit text-lg font-medium text-background/80 transition-colors hover:text-background md:text-xl"
               target="_blank"
               rel="noopener noreferrer"
             >
               {{ link.label }}
               <span
-                class="absolute -bottom-1 left-0 h-[1px] w-0 bg-foreground transition-all duration-300 group-hover:w-full"
+                class="absolute -bottom-1 left-0 h-px w-0 bg-foreground transition-all duration-300 group-hover:w-full"
               ></span>
             </a>
           </nav>
@@ -134,11 +134,11 @@ onUnmounted(() => {
         <!-- Location / Time -->
         <div class="md:col-span-2">
           <h4
-            class="mb-6 text-xs font-bold uppercase tracking-widest text-muted-foreground"
+            class="mb-6 text-xs font-bold uppercase tracking-widest text-muted-background"
           >
             Location
           </h4>
-          <div class="flex flex-col gap-1 text-foreground/80">
+          <div class="flex flex-col gap-1 text-background/80">
             <p class="text-lg font-medium md:text-xl">Lahore, PK</p>
             <p
               class="mt-2 flex items-center gap-2 font-mono text-sm md:text-base"
@@ -167,7 +167,7 @@ onUnmounted(() => {
             v-for="link in legalLinks"
             :key="link.to"
             :to="link.to"
-            class="transition-colors hover:text-foreground"
+            class="transition-colors hover:text-background"
           >
             {{ link.label }}
           </NuxtLink>
@@ -180,7 +180,7 @@ onUnmounted(() => {
       class="pointer-events-none absolute bottom-[-10%] left-0 z-0 flex w-full select-none justify-center overflow-hidden opacity-5 md:bottom-[-20%]"
     >
       <h1
-        class="m-0 whitespace-nowrap p-0 text-[25vw] font-black leading-none tracking-tighter text-foreground"
+        class="m-0 whitespace-nowrap p-0 text-[25vw] font-black leading-none tracking-tighter text-background"
       >
         A K S E
       </h1>

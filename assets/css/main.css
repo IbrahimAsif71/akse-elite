@@ -49,49 +49,19 @@
 }
 
 /* ─────────────────────────────────────────────────────
-   Dark theme — cinematic palette
-   Activated by @nuxtjs/color-mode adding .dark to <html>
+   Film grain overlay — fixed, non-interactive,
+   tactile heritage texture (appears on all pages)
    ───────────────────────────────────────────────────── */
 
-.dark {
-  --bg: #0e1516;
-  --surface: rgba(10, 12, 13, 0.34);
-  --surface-alt: rgba(10, 12, 13, 0.46);
-  --text: #f3ede7;
-  --text-muted: rgba(243, 237, 231, 0.78);
-  --orange: #c9653d;
-  --orange-foreground: #fff7ef;
-  --teal: #2c7a83;
-
-  --background: var(--bg);
-  --foreground: var(--text);
-
-  --card: #141e1f;
-  --card-foreground: var(--text);
-
-  --popover: #141e1f;
-  --popover-foreground: var(--text);
-
-  --primary: var(--orange);
-  --primary-foreground: var(--orange-foreground);
-
-  --secondary: #1e2a2b;
-  --secondary-foreground: #d4cdc6;
-
-  --muted: #1a2425;
-  --muted-foreground: var(--text-muted);
-
-  --accent: #1e2829;
-  --accent-foreground: #e8e0d6;
-
-  --destructive: #dc2626;
-  --destructive-foreground: #fff5f5;
-
-  --border: #2a3839;
-  --input: #2a3839;
-  --ring: var(--orange);
-
-  color-scheme: dark;
+html::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='0.03'/%3E%3C/svg%3E");
+  will-change: transform;
 }
 
 /* ─────────────────────────────────────────────────────

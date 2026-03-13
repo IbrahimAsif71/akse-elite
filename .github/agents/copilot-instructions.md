@@ -13,6 +13,8 @@ Auto-generated from all feature plans. Last updated: 2026-03-05
 - N/A — all content is inline static mock data (005-about-process-page)
 - TypeScript (Nuxt 4 / Vue 3 Composition API) + Nuxt 4, Tailwind CSS v4, shadcn-vue, GSAP 3, Lenis, cobe (globe), Sanity clien (006-earthy-theme-cleanup)
 - N/A (no data persistence changes) (006-earthy-theme-cleanup)
+- TypeScript (Nuxt 4 / Vue 3 Composition API) + Nuxt 4, Vue 3, Tailwind CSS v4, shadcn-vue, GSAP 3.14.2 + ScrollTrigger (existing `gsap.client.ts`), Lenis 1.3.17 (existing `lenis.client.ts`), `cobe` 0.6.5 (already installed) (008-heritage-home-page)
+- N/A — all content is inline static data (copy hardcoded, images from `public/images/`) (008-heritage-home-page)
 
 - TypeScript (Nuxt 4 / Vue 3 Composition API with `script setup`) + Nuxt 4, Tailwind CSS 4, shadcn-vue, GSAP, lenis (modern package), Geist Sans fon (001-core-layout-foundation)
 
@@ -33,9 +35,9 @@ pnpm test && pnpm lint
 TypeScript (Nuxt 4 / Vue 3 Composition API with `script setup`): Follow standard conventions
 
 ## Recent Changes
+- 008-heritage-home-page: Added TypeScript (Nuxt 4 / Vue 3 Composition API) + Nuxt 4, Vue 3, Tailwind CSS v4, shadcn-vue, GSAP 3.14.2 + ScrollTrigger (existing `gsap.client.ts`), Lenis 1.3.17 (existing `lenis.client.ts`), `cobe` 0.6.5 (already installed)
 - 007-tours-portal: Added TypeScript (Nuxt 4 / Vue 3 Composition API) + Nuxt 4, Vue 3, Tailwind CSS v4, shadcn-vue, GSAP 3.14.x + ScrollTrigger (existing `gsap.client.ts`), Lenis 1.3.x (existing `lenis.client.ts`)
 - 006-earthy-theme-cleanup: Added TypeScript (Nuxt 4 / Vue 3 Composition API) + Nuxt 4, Tailwind CSS v4, shadcn-vue, GSAP 3, Lenis, cobe (globe), Sanity clien
-- 005-about-process-page: Added TypeScript (Nuxt 4 / Vue 3 Composition API) + Nuxt 4, Vue 3, Tailwind CSS v4, shadcn-vue, GSAP 3.14.x + ScrollTrigger (existing `gsap.client.ts`), Lenis 1.3.x (existing `lenis.client.ts`), @nuxtjs/color-mode 4.x
 
 
 <!-- MANUAL ADDITIONS START -->

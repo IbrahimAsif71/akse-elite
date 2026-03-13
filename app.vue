@@ -14,6 +14,8 @@ useHead({
     class: "bg-background text-foreground font-sans antialiased",
   },
 });
+
+// ...existing code...
 </script>
 
 <template>

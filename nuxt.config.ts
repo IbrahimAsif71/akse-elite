@@ -7,13 +7,7 @@ export default defineNuxtConfig({
 
   css: ["~/assets/css/main.css"],
 
-  modules: ["shadcn-nuxt", "@nuxt/fonts", "@nuxtjs/color-mode"],
-
-  colorMode: {
-    classSuffix: "",
-    preference: "system",
-    fallback: "light",
-  },
+  modules: ["shadcn-nuxt", "@nuxt/fonts"],
 
   shadcn: {
     prefix: "",
