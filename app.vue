@@ -1,34 +1,25 @@
+<script setup lang="ts">
+useSeoMeta({
+  title: "AKSE — Heritage-Tech Studio",
+  ogTitle: "AKSE — Heritage-Tech Studio",
+  description:
+    "Premium heritage-tech studio crafting cinematic digital experiences.",
+  ogDescription:
+    "Premium heritage-tech studio crafting cinematic digital experiences.",
+  ogType: "website",
+});
+
+useHead({
+  htmlAttrs: {
+    class: "bg-background text-foreground font-sans antialiased",
+  },
+});
+
+// ...existing code...
+</script>
+
 <template>
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
 </template>
-
-<style>
-
-useHead({
-  meta: [
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
-  ]
-})
-
-/* Luxury page transitions */
-.page-enter-active,
-.page-leave-active{
-  transition:
-    opacity .55s cubic-bezier(.2,.8,.2,1),
-    transform .55s cubic-bezier(.2,.8,.2,1),
-    filter .55s cubic-bezier(.2,.8,.2,1);
-  will-change: opacity, transform, filter;
-}
-.page-enter-from{
-  opacity: 0;
-  transform: translateY(10px) scale(0.995);
-  filter: blur(6px);
-}
-.page-leave-to{
-  opacity: 0;
-  transform: translateY(-8px) scale(0.995);
-  filter: blur(6px);
-}
-</style>

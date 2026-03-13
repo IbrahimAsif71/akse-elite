@@ -1,17 +1,21 @@
-import { createClient } from '@sanity/client'
-import imageUrlBuilder from '@sanity/image-url'
-import { useRuntimeConfig } from '#imports'
+import { createClient, type SanityClient } from "@sanity/client";
+import { createImageUrlBuilder } from "@sanity/image-url";
 
-const config = useRuntimeConfig()
+let _client: SanityClient | null = null;
 
-export const sanity = createClient({
-  projectId: config.public.sanityProjectId as string,
-  dataset: config.public.sanityDataset as string,
-  apiVersion: config.public.sanityApiVersion as string,
-  useCdn: true
-})
+export function useSanity() {
+  if (!_client) {
+    const config = useRuntimeConfig();
+    _client = createClient({
+      projectId: config.public.sanityProjectId as string,
+      dataset: config.public.sanityDataset as string,
+      apiVersion: config.public.sanityApiVersion as string,
+      useCdn: true,
+    });
+  }
+  return _client;
+}
 
-const builder = imageUrlBuilder(sanity)
-
-// keep it simple: accept any image source (Sanity image objects vary)
-export const urlFor = (source: any) => builder.image(source)
+export function urlFor(source: any) {
+  return createImageUrlBuilder(useSanity()).image(source);
+}

@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { sanity, urlFor } from '~/utils/sanity'
-import { onMounted, ref } from 'vue'
+import { Button } from "~/components/ui/button";
+import { useSanity, urlFor } from "~/utils/sanity";
 
-const route = useRoute()
-const slug = route.params.slug as string
+const route = useRoute();
+const slug = route.params.slug as string;
+const sanity = useSanity();
 
-const { data: tour, pending, error } = await useAsyncData(`tour-${slug}`, () =>
+const {
+  data: tour,
+  pending,
+  error,
+} = await useAsyncData(`tour-${slug}`, () =>
   sanity.fetch(
     `*[_type=="tour" && slug.current==$slug][0]{
       title,
@@ -15,101 +20,107 @@ const { data: tour, pending, error } = await useAsyncData(`tour-${slug}`, () =>
       heroImage,
       tourUrl
     }`,
-    { slug }
-  )
-)
+    { slug },
+  ),
+);
 
-// SEO: per-tour meta
 useHead(() => ({
-  title: tour.value?.title ? `${tour.value.title} — akse` : 'Tour — akse',
+  title: tour.value?.title ? `${tour.value.title} — AKSE` : "Tour — AKSE",
   meta: [
     {
-      name: 'description',
-      content: tour.value?.summary || 'Immersive 360 tour powered by akse.'
+      name: "description",
+      content: tour.value?.summary || "Immersive 360 tour powered by AKSE.",
     },
-    { property: 'og:title', content: tour.value?.title || 'akse Tour' },
+    { property: "og:title", content: tour.value?.title || "AKSE Tour" },
     {
-      property: 'og:description',
-      content: tour.value?.summary || 'Immersive 360 tour powered by akse.'
-    }
-  ]
-}))
+      property: "og:description",
+      content: tour.value?.summary || "Immersive 360 tour powered by AKSE.",
+    },
+  ],
+}));
 
-// Cinematic entrance
-const { $gsap } = useNuxtApp()
+const { $gsap } = useNuxtApp();
 
-const wrap = ref<HTMLElement | null>(null)
-const titleEl = ref<HTMLElement | null>(null)
-const metaEl = ref<HTMLElement | null>(null)
-const heroImg = ref<HTMLElement | null>(null)
-const embedEl = ref<HTMLElement | null>(null)
+const wrap = ref<HTMLElement | null>(null);
+const titleEl = ref<HTMLElement | null>(null);
+const metaEl = ref<HTMLElement | null>(null);
+const heroImg = ref<HTMLElement | null>(null);
+const embedEl = ref<HTMLElement | null>(null);
 
 onMounted(() => {
-  // Only animate if data exists + refs exist
-  if (!wrap.value || !titleEl.value) return
+  if (!wrap.value || !titleEl.value) return;
 
-  const tl = $gsap.timeline()
+  const tl = $gsap.timeline();
 
   tl.from(titleEl.value, {
     y: 50,
     opacity: 0,
     duration: 1,
-    ease: 'power3.out'
+    ease: "power3.out",
   })
     .from(
       metaEl.value,
-      {
-        y: 30,
-        opacity: 0,
-        duration: 0.9,
-        ease: 'power3.out'
-      },
-      '-=0.7'
+      { y: 30, opacity: 0, duration: 0.9, ease: "power3.out" },
+      "-=0.7",
     )
     .from(
       heroImg.value,
-      {
-        scale: 1.03,
-        opacity: 0,
-        duration: 1.1,
-        ease: 'power2.out'
-      },
-      '-=0.8'
+      { scale: 1.03, opacity: 0, duration: 1.1, ease: "power2.out" },
+      "-=0.8",
     )
     .from(
       embedEl.value,
-      {
-        y: 40,
-        opacity: 0,
-        duration: 0.9,
-        ease: 'power3.out'
-      },
-      '-=0.6'
-    )
-})
+      { y: 40, opacity: 0, duration: 0.9, ease: "power3.out" },
+      "-=0.6",
+    );
+});
 </script>
 
 <template>
-  <section class="wrap" ref="wrap">
-    <div v-if="pending" class="state">Loading tour…</div>
-    <div v-else-if="error" class="state">Error loading tour.</div>
+  <section ref="wrap" class="mx-auto max-w-5xl px-6 pb-24 pt-32">
+    <div v-if="pending" class="py-20 text-muted-foreground">Loading tour…</div>
+    <div v-else-if="error" class="py-20 text-muted-foreground">
+      Error loading tour.
+    </div>
 
-    <div v-else-if="tour" class="content">
-      <div class="top">
-        <div class="left">
-          <div class="tag">{{ tour.category }}</div>
+    <div v-else-if="tour">
+      <!-- Top: info + hero image -->
+      <div class="grid items-start gap-8 md:grid-cols-2">
+        <div>
+          <div
+            v-if="tour.category"
+            class="text-xs font-semibold uppercase tracking-widest text-primary"
+          >
+            {{ tour.category }}
+          </div>
 
-          <h1 ref="titleEl">{{ tour.title }}</h1>
+          <h1
+            ref="titleEl"
+            class="mt-3 text-4xl font-light tracking-tight text-foreground md:text-5xl"
+          >
+            {{ tour.title }}
+          </h1>
 
-          <div ref="metaEl" class="meta">
-            <div class="loc">{{ tour.location }}</div>
-            <p class="sum">{{ tour.summary }}</p>
+          <div ref="metaEl" class="mt-4">
+            <div v-if="tour.location" class="text-muted-foreground">
+              {{ tour.location }}
+            </div>
+            <p
+              v-if="tour.summary"
+              class="mt-3 max-w-prose leading-relaxed text-muted-foreground"
+            >
+              {{ tour.summary }}
+            </p>
 
-            <div class="actions">
-              <NuxtLink class="btn ghost" to="/tours">Back to Tours</NuxtLink>
-              <Magnetic>
-  <NuxtLink class="btn" to="/contact">Start a Project</NuxtLink>
-</Magnetic>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <NuxtLink to="/tours">
+                <Button variant="outline"> Back to Tours </Button>
+              </NuxtLink>
+              <MagneticWrapper>
+                <NuxtLink to="/contact">
+                  <Button variant="default"> Start a Project </Button>
+                </NuxtLink>
+              </MagneticWrapper>
             </div>
           </div>
         </div>
@@ -117,167 +128,43 @@ onMounted(() => {
         <img
           v-if="tour.heroImage"
           ref="heroImg"
-          class="heroImg"
           :src="urlFor(tour.heroImage).width(1600).url()"
-          alt=""
+          :alt="tour.title"
+          class="w-full rounded-2xl border border-border object-cover md:h-85"
         />
-        <div v-else ref="heroImg" class="heroImg placeholder">
+        <div
+          v-else
+          ref="heroImg"
+          class="flex h-85 items-center justify-center rounded-2xl border border-border bg-muted text-muted-foreground"
+        >
           No hero image added
         </div>
       </div>
 
-      <div ref="embedEl" class="embed">
-        <h2>Enter Experience</h2>
+      <!-- 3D Tour Embed -->
+      <div ref="embedEl" class="mt-16">
+        <h2 class="text-3xl font-light text-foreground">Enter Experience</h2>
 
-        <div v-if="tour.tourUrl" class="frame">
+        <div
+          v-if="tour.tourUrl"
+          class="mt-4 overflow-hidden rounded-2xl border border-border bg-black"
+        >
           <iframe
             :src="tour.tourUrl"
             loading="lazy"
             allow="fullscreen; xr-spatial-tracking; gyroscope; accelerometer"
             allowfullscreen
+            class="block h-160 w-full border-0 max-md:h-130"
           />
         </div>
 
-        <div v-else class="state inline">
-          No tour URL added yet. Add an iframe URL in Sanity → Tour → “360 Tour URL”.
+        <div v-else class="mt-4 text-muted-foreground">
+          No tour URL added yet. Add an iframe URL in Sanity → Tour → "360 Tour
+          URL".
         </div>
       </div>
     </div>
 
-    <div v-else class="state">Tour not found.</div>
+    <div v-else class="py-20 text-muted-foreground">Tour not found.</div>
   </section>
 </template>
-
-<style scoped>
-.wrap {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 120px 18px;
-  color: white;
-}
-
-.state {
-  opacity: 0.75;
-  padding: 40px 0;
-}
-
-.state.inline {
-  padding: 18px 0 0;
-}
-
-.top {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
-  align-items: start;
-}
-
-.tag {
-  color: ;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 13px;
-}
-
-h1 {
-  font-size: 56px;
-  font-weight: 300;
-  margin: 10px 0 14px;
-}
-
-.meta {
-  margin-top: 6px;
-}
-
-.loc {
-  opacity: 0.85;
-  margin-bottom: 10px;
-}
-
-.sum {
-  opacity: 0.9;
-  line-height: 1.85;
-  margin: 0;
-  max-width: 52ch;
-}
-
-.actions {
-  margin-top: 18px;
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.btn {
-  display: inline-block;
-  background: var(--rust);
-  padding: 12px 18px;
-  border-radius: 999px;
-  color: white;
-  text-decoration: none;
-}
-
-.ghost {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-}
-
-.heroImg {
-  width: 100%;
-  height: 340px;
-  object-fit: cover;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(19, 43, 53, 0.55);
-  opacity: 0.85;
-}
-
-.embed {
-  margin-top: 60px;
-}
-
-.embed h2 {
-  font-size: 34px;
-  font-weight: 300;
-  margin: 0 0 16px;
-}
-
-.frame {
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: #000;
-}
-
-iframe {
-  width: 100%;
-  height: 640px;
-  border: 0;
-  display: block;
-}
-
-@media (max-width: 900px) {
-  .top {
-    grid-template-columns: 1fr;
-  }
-
-  iframe {
-    height: 520px;
-  }
-}
-</style>
-
-usePageIntro(() => {
-  if (!titleEl.value) return
-  const tl = $gsap.timeline()
-  tl.from(titleEl.value, { y: 50, opacity: 0, duration: 1, ease: 'power3.out' })
-    .from(metaEl.value, { y: 24, opacity: 0, duration: 0.8 }, '-=0.6')
-    .from(heroImg.value, { scale: 1.03, opacity: 0, duration: 1.0 }, '-=0.75')
-    .from(embedEl.value, { y: 40, opacity: 0, duration: 0.8 }, '-=0.6')
-})

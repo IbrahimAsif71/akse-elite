@@ -30,3 +30,11 @@ dist
 
 # Netlify local artifacts
 .netlify
+
+# Additional common outputs
+build
+coverage
+*.tmp
+*.swp
+Thumbs.db
+.vscode

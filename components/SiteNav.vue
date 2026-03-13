@@ -1,303 +1,196 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onBeforeUnmount, ref, watch } from 'vue'
+import { buttonVariants } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
+const route = useRoute();
+const { $gsap } = useNuxtApp();
 
-const route = useRoute()
+const navLinks = [
+  { label: "Home", to: "/" },
+  { label: "About", to: "/about" },
+  { label: "Tours", to: "/tours" },
+  { label: "Blog", to: "/blog" },
+];
 
-const navItems = [
-  { label: 'Home', to: '/' },
-  { label: 'About', to: '/about' },
-  { label: 'Tours', to: '/tours' },
-  { label: 'Blog', to: '/blog' }
-]
+// Mobile drawer state
+const drawerOpen = ref(false);
 
-const isActive = (path: string) => route.path === path || route.path.startsWith(path + '/')
+// Close drawer on route change
+watch(
+  () => route.path,
+  () => {
+    drawerOpen.value = false;
+  },
+);
 
-// Desktop underline
-const rail = ref<HTMLElement | null>(null)
-const underline = ref<HTMLElement | null>(null)
-const activeIdx = computed(() => navItems.findIndex(i => isActive(i.to)))
+// Underline animation
+const navRef = ref<HTMLElement | null>(null);
+const underlineRef = ref<HTMLElement | null>(null);
 
-const positionUnderline = async () => {
-  await nextTick()
-  if (!rail.value || !underline.value) return
-  const anchors = Array.from(rail.value.querySelectorAll('a.link')) as HTMLElement[]
-  const idx = activeIdx.value >= 0 ? activeIdx.value : 0
-  const target = anchors[idx]
-  if (!target) return
-  underline.value.style.transform = `translateX(${target.offsetLeft}px)`
-  underline.value.style.width = `${target.offsetWidth}px`
+function isActive(to: string): boolean {
+  if (to === "/") return route.path === "/";
+  return route.path.startsWith(to);
 }
 
-// Mobile menu
-const menuOpen = ref(false)
-const toggleMenu = () => (menuOpen.value = !menuOpen.value)
-const closeMenu = () => (menuOpen.value = false)
+function animateUnderline() {
+  if (!import.meta.client || !navRef.value || !underlineRef.value || !$gsap)
+    return;
+
+  const activeLink = navRef.value.querySelector<HTMLElement>(
+    '[data-active="true"]',
+  );
+  if (!activeLink) {
+    $gsap.to(underlineRef.value, {
+      width: 0,
+      duration: 0.3,
+      ease: "power2.out",
+    });
+    return;
+  }
+
+  const navRect = navRef.value.getBoundingClientRect();
+  const linkRect = activeLink.getBoundingClientRect();
+
+  $gsap.to(underlineRef.value, {
+    x: linkRect.left - navRect.left,
+    width: linkRect.width,
+    duration: 0.3,
+    ease: "power2.out",
+  });
+}
 
 watch(
   () => route.path,
-  async () => {
-    closeMenu()
-    await positionUnderline()
-  }
-)
+  () => {
+    nextTick(animateUnderline);
+  },
+);
 
-watch(menuOpen, (open) => {
-  // lock scroll on mobile drawer open
-  document.documentElement.style.overflow = open ? 'hidden' : ''
-})
-
-onMounted(positionUnderline)
-onBeforeUnmount(() => {
-  document.documentElement.style.overflow = ''
-})
+onMounted(() => {
+  nextTick(animateUnderline);
+});
 </script>
 
 <template>
-  <header class="nav">
-    <NuxtLink class="brand" to="/" @click="closeMenu">
-      <img src="/logo.png" alt="akse" />
-    </NuxtLink>
+  <header
+    class="fixed top-0 right-0 left-0 z-40 border-b border-border/50 bg-black/80 backdrop-blur-md supports-not-[backdrop-filter]:bg-background"
+  >
+    <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+      <!-- Logo -->
+      <NuxtLink to="/" class="flex items-center" aria-label="AKSE — Home">
+        <img
+          src="/akse.png"
+          alt=""
+          width="2618"
+          height="864"
+          class="h-7 w-auto md:h-8"
+        />
+      </NuxtLink>
 
-    <!-- Desktop -->
-    <nav class="links desktop">
-      <div ref="rail" class="rail">
+      <!-- Desktop nav -->
+      <nav
+        ref="navRef"
+        class="relative hidden items-center gap-1 md:flex"
+        aria-label="Main navigation"
+      >
         <NuxtLink
-          v-for="item in navItems"
-          :key="item.to"
-          :to="item.to"
-          class="link"
-          :class="{ active: isActive(item.to) }"
+          v-for="link in navLinks"
+          :key="link.to"
+          :to="link.to"
+          :data-active="isActive(link.to)"
+          class="relative px-3 py-2 text-sm font-medium transition-colors"
+          :class="[
+            isActive(link.to) ? 'text-white' : 'text-white hover:text-white',
+          ]"
         >
-          {{ item.label }}
+          {{ link.label }}
         </NuxtLink>
 
-        <div ref="underline" class="underline" />
-      </div>
+        <!-- Animated underline -->
+        <div
+          ref="underlineRef"
+          class="absolute bottom-0 left-0 h-0.5 bg-primary"
+          :style="{ width: '0px' }"
+        />
+      </nav>
 
-      <NuxtLink class="cta rust-glow" to="/contact">Start Project</NuxtLink>
-    </nav>
-
-    <!-- Mobile -->
-    <button class="burger mobile" type="button" :aria-expanded="menuOpen" aria-label="Open menu" @click="toggleMenu">
-      <span />
-      <span />
-      <span />
-    </button>
-
-    <!-- Mobile drawer + backdrop -->
-    <div class="backdrop" :class="{ on: menuOpen }" @click="closeMenu" />
-
-    <aside class="drawer" :class="{ on: menuOpen }">
-      <div class="drawerTop">
-        <div class="drawerTitle">Menu</div>
-        <button class="close" type="button" aria-label="Close menu" @click="closeMenu">✕</button>
-      </div>
-
-      <div class="drawerLinks">
-        <NuxtLink
-          v-for="item in navItems"
-          :key="item.to"
-          :to="item.to"
-          class="drawerLink"
-          :class="{ active: isActive(item.to) }"
-          @click="closeMenu"
-        >
-          {{ item.label }}
+      <!-- Desktop controls -->
+      <div class="hidden items-center gap-2 md:flex">
+        <NuxtLink to="/contact" :class="buttonVariants({ variant: 'default' })">
+          Start Project
         </NuxtLink>
       </div>
 
-      <NuxtLink class="drawerCta rust-glow" to="/contact" @click="closeMenu">Start Project</NuxtLink>
-    </aside>
+      <!-- Mobile controls -->
+      <div class="flex items-center gap-1 md:hidden">
+        <Sheet v-model:open="drawerOpen">
+          <button
+            class="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground hover:text-foreground"
+            aria-label="Open menu"
+            @click="drawerOpen = true"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="4" x2="20" y1="12" y2="12" />
+              <line x1="4" x2="20" y1="6" y2="6" />
+              <line x1="4" x2="20" y1="18" y2="18" />
+            </svg>
+          </button>
+
+          <SheetContent side="right" class="w-72 bg-background">
+            <SheetHeader>
+              <SheetTitle class="text-foreground">Navigation</SheetTitle>
+              <SheetDescription class="text-muted-foreground">
+                Browse the site
+              </SheetDescription>
+            </SheetHeader>
+
+            <nav
+              class="mt-6 flex flex-col gap-1"
+              aria-label="Mobile navigation"
+            >
+              <NuxtLink
+                v-for="link in navLinks"
+                :key="link.to"
+                :to="link.to"
+                class="rounded-md px-3 py-2.5 text-base font-medium transition-colors"
+                :class="[
+                  isActive(link.to)
+                    ? 'bg-accent text-foreground'
+                    : 'text-muted-foreground hover:bg-accent hover:text-foreground',
+                ]"
+                @click="drawerOpen = false"
+              >
+                {{ link.label }}
+              </NuxtLink>
+            </nav>
+
+            <div class="mt-6 px-3">
+              <NuxtLink
+                to="/contact"
+                :class="buttonVariants({ variant: 'default', class: 'w-full' })"
+                @click="drawerOpen = false"
+              >
+                Start Project
+              </NuxtLink>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+    </div>
   </header>
 </template>
-
-<style scoped>
-.nav{
-  position: fixed;
-  inset: 0 0 auto 0;
-  z-index: 50;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding: 14px 18px;
-  background: rgba(20, 10, 8, 0.35);
-  border-bottom: 1px solid rgba(255,255,255,0.14);
-  backdrop-filter: blur(14px);
-}
-
-.brand img{ height: 38px; width:auto; }
-
-/* Desktop links */
-.links{
-  display:flex;
-  gap: 16px;
-  align-items:center;
-}
-.rail{
-  position: relative;
-  display:flex;
-  align-items:center;
-  padding: 6px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.06);
-}
-.link{
-  position: relative;
-  z-index: 2;
-  padding: 10px 16px;
-  color:white;
-  text-decoration:none;
-  opacity: 0.86;
-  transition: opacity .2s ease;
-  white-space: nowrap;
-}
-.link:hover{ opacity: 1; }
-.link.active{ opacity: 1; }
-
-.underline{
-  position:absolute;
-  left: 6px;
-  top: 6px;
-  height: calc(100% - 12px);
-  width: 40px;
-  border-radius: 999px;
-  background: rgba(20, 10, 8, 0.35);
-  border: 1px solid rgba(255,255,255,0.12);
-  backdrop-filter: blur(14px);
-  z-index: 1;
-  transition:
-    transform 420ms cubic-bezier(.2,.8,.2,1),
-    width 420ms cubic-bezier(.2,.8,.2,1);
-}
-
-.cta{
-  background:var(--rust);
-  padding:10px 16px;
-  border-radius:999px;
-  color:white;
-  text-decoration:none;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-}
-
-/* Mobile controls */
-.burger{
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(14px);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  gap: 6px;
-  padding: 0 12px;
-  cursor: pointer;
-}
-.burger span{
-  height: 2px;
-  width: 100%;
-  background: rgba(255,255,255,0.92);
-  border-radius: 999px;
-  opacity: .9;
-}
-
-/* Drawer */
-.backdrop{
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .25s ease;
-  z-index: 49;
-}
-.backdrop.on{
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.drawer{
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: min(86vw, 360px);
-  background: rgba(20, 10, 8, 0.75);
-  border-left: 1px solid rgba(255,255,255,0.12);
-  backdrop-filter: blur(18px);
-  transform: translateX(110%);
-  transition: transform .28s cubic-bezier(.2,.8,.2,1);
-  z-index: 50;
-  padding: 16px;
-  display:flex;
-  flex-direction:column;
-  gap: 14px;
-}
-.drawer.on{ transform: translateX(0); }
-
-.drawerTop{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.drawerTitle{
-  color: rgba(255,255,255,0.9);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  font-size: 12px;
-}
-.close{
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.04);
-  color: white;
-  cursor: pointer;
-}
-
-.drawerLinks{
-  display:flex;
-  flex-direction:column;
-  gap: 10px;
-  margin-top: 6px;
-}
-.drawerLink{
-  padding: 12px 12px;
-  border-radius: 14px;
-  text-decoration:none;
-  color: rgba(255,255,255,0.88);
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-.drawerLink.active{
-  border-color: rgba(201,123,46,0.45);
-  background: rgba(201,123,46,0.14);
-  color: white;
-}
-
-.drawerCta{
-  margin-top: auto;
-  display:block;
-  text-align:center;
-  background: var(--rust);
-  color:white;
-  text-decoration:none;
-  padding: 12px 16px;
-  border-radius: 999px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-}
-
-/* Responsive switching */
-.desktop{ display:none; }
-.mobile{ display:flex; }
-
-@media (min-width: 900px){
-  .nav{ padding: 14px 26px; }
-  .desktop{ display:flex; }
-  .mobile{ display:none; }
-  .backdrop, .drawer{ display:none; }
-}
-</style>

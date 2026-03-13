@@ -1,45 +1,56 @@
 <script setup lang="ts">
-import { computed, onMounted, onBeforeUnmount, ref } from 'vue'
+import type Lenis from "lenis";
 
-const p = ref(0)
+const progress = ref(0);
+const route = useRoute();
+const { $lenis } = useNuxtApp() as { $lenis: Lenis | null };
 
-const onScroll = () => {
-  const doc = document.documentElement
-  const scrollTop = doc.scrollTop
-  const max = doc.scrollHeight - doc.clientHeight
-  p.value = max > 0 ? scrollTop / max : 0
+function onNativeScroll() {
+  if (!import.meta.client) return;
+  const scrollY = window.scrollY;
+  const scrollHeight = document.documentElement.scrollHeight;
+  const clientHeight = window.innerHeight;
+  const maxScroll = scrollHeight - clientHeight;
+
+  progress.value =
+    maxScroll > 0 ? Math.min(Math.max(scrollY / maxScroll, 0), 1) : 0;
 }
 
+watch(
+  () => route.path,
+  () => {
+    progress.value = 0;
+  },
+);
+
 onMounted(() => {
-  onScroll()
-  window.addEventListener('scroll', onScroll, { passive: true })
-})
+  if ($lenis) {
+    // Use Lenis scroll events for progress
+    $lenis.on("scroll", (e: { progress: number }) => {
+      progress.value = e.progress;
+    });
+  } else {
+    // Fallback to native scroll (reduced-motion or no Lenis)
+    window.addEventListener("scroll", onNativeScroll, { passive: true });
+    onNativeScroll();
+  }
+});
 
-onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
-
-const width = computed(() => `${Math.round(p.value * 1000) / 10}%`)
+onBeforeUnmount(() => {
+  if (!$lenis) {
+    window.removeEventListener("scroll", onNativeScroll);
+  }
+});
 </script>
 
 <template>
-  <div class="bar">
-    <div class="fill" :style="{ width }" />
-  </div>
+  <div
+    class="fixed top-0 left-0 z-50 h-[3px] bg-primary"
+    :style="{ width: `${progress * 100}%` }"
+    role="progressbar"
+    :aria-valuenow="Math.round(progress * 100)"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-label="Scroll progress"
+  />
 </template>
-
-<style scoped>
-.bar{
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 3px;
-  width: 100%;
-  z-index: 9999;
-  background: rgba(255,255,255,0.08);
-}
-.fill{
-  height: 100%;
-  background: rgba(201,101,61,0.95);
-  box-shadow: 0 0 18px rgba(201,101,61,0.35);
-  transition: width .08s linear;
-}
-</style>
