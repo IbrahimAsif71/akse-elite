@@ -1,146 +1,168 @@
 <template>
-  <div
-    ref="rootRef"
-    class="relative w-full h-[600px] lg:h-[800px] xl:h-[900px] box-border"
-    :style="{
-      '--segments-x': segments,
-      '--segments-y': segments,
-      '--overlay-blur-color': overlayBlurColor,
-      '--tile-radius': imageBorderRadius,
-      '--enlarge-radius': openedImageBorderRadius,
-      '--image-filter': grayscale ? 'grayscale(1)' : 'none',
-      '--radius': '520px',
-      '--viewer-pad': '72px',
-      '--circ': 'calc(var(--radius) * 3.14)',
-      '--rot-y': 'calc((360deg / var(--segments-x)) / 2)',
-      '--rot-x': 'calc((360deg / var(--segments-y)) / 2)',
-      '--item-width': 'calc(var(--circ) / var(--segments-x))',
-      '--item-height': 'calc(var(--circ) / var(--segments-y))',
-    }"
-  >
-    <main
-      ref="mainRef"
-      class="absolute inset-0 grid place-items-center overflow-hidden touch-none select-none bg-foreground"
-    >
+  <section class="relative bg-background pt-24 pb-12 overflow-hidden flex flex-col w-full" ref="sectionRef">
+    
+    <!-- Text Context Section -->
+    <div class="container mx-auto px-6 lg:px-12 mb-12">
+      <div class="max-w-4xl header-content">
+        <p class="text-xs font-mono tracking-[0.2em] uppercase text-primary/80 mb-6 reveal-item">
+          [ Curated Artifacts ]
+        </p>
+        <h2 class="text-5xl lg:text-7xl xl:text-8xl font-extralight tracking-tight text-foreground leading-[1.0] mb-8 reveal-item">
+          Virtual Space <br/>
+          <span class="text-muted-foreground italic">& Artifacts</span>
+        </h2>
+        <p class="text-lg md:text-xl font-light text-muted-foreground leading-relaxed max-w-2xl reveal-item">
+          Drag to explore. Click to inspect. A multidimensional gallery of physical artifacts digitized for global preservation.
+        </p>
+      </div>
+    </div>
+
+    <!-- The Interactive Dome -->
+    <div class="w-full relative px-0 flex justify-center">
       <div
-        class="w-full h-full grid place-items-center contain-layout contain-paint contain-size"
+        ref="rootRef"
+        class="relative w-full max-w-[1920px] h-[600px] lg:h-[800px] xl:h-[900px] box-border dome-wrapper"
         :style="{
-          perspective: 'calc(var(--radius) * 2)',
-          perspectiveOrigin: '50% 50%',
+          '--segments-x': segments,
+          '--segments-y': segments,
+          '--overlay-blur-color': overlayBlurColor,
+          '--tile-radius': imageBorderRadius,
+          '--enlarge-radius': openedImageBorderRadius,
+          '--image-filter': grayscale ? 'grayscale(1)' : 'none',
+          '--radius': '520px',
+          '--viewer-pad': '72px',
+          '--circ': 'calc(var(--radius) * 3.14)',
+          '--rot-y': 'calc((360deg / var(--segments-x)) / 2)',
+          '--rot-x': 'calc((360deg / var(--segments-y)) / 2)',
+          '--item-width': 'calc(var(--circ) / var(--segments-x))',
+          '--item-height': 'calc(var(--circ) / var(--segments-y))',
         }"
       >
-        <div
-          ref="sphereRef"
-          class="will-change-transform"
-          style="
-            transform-style: preserve-3d;
-            transform: translateZ(calc(var(--radius) * -1));
-          "
+        <main
+          ref="mainRef"
+          class="absolute inset-0 grid place-items-center overflow-hidden touch-none select-none bg-foreground"
         >
           <div
-            v-for="(item, i) in items"
-            :key="`${item.x},${item.y},${i}`"
-            class="absolute -top-249.75 -bottom-249.75 -left-249.75 -right-249.75 m-auto transition-transform duration-300"
-            :data-src="item.src"
-            :data-offset-x="item.x"
-            :data-offset-y="item.y"
-            :data-size-x="item.sizeX"
-            :data-size-y="item.sizeY"
+            class="w-full h-full grid place-items-center contain-layout contain-paint contain-size"
             :style="{
-              '--offset-x': item.x,
-              '--offset-y': item.y,
-              '--item-size-x': item.sizeX,
-              '--item-size-y': item.sizeY,
-              width: 'calc(var(--item-width) * var(--item-size-x))',
-              height: 'calc(var(--item-height) * var(--item-size-y))',
-              transformStyle: 'preserve-3d',
-              transformOrigin: '50% 50%',
-              backfaceVisibility: 'hidden',
-              transform: `rotateY(calc(var(--rot-y) * (var(--offset-x) + ((var(--item-size-x) - 1) / 2)) + var(--rot-y-delta, 0deg))) rotateX(calc(var(--rot-x) * (var(--offset-y) - ((var(--item-size-y) - 1) / 2)) + var(--rot-x-delta, 0deg))) translateZ(var(--radius))`,
+              perspective: 'calc(var(--radius) * 2)',
+              perspectiveOrigin: '50% 50%',
             }"
           >
             <div
-              class="absolute block inset-2.5 bg-transparent overflow-hidden transition-transform duration-300 cursor-pointer pointer-events-auto transform translate-z-0 focus:outline-none"
-              role="button"
-              tabindex="0"
-              :aria-label="item.alt || 'Open image'"
-              @click="onTileClick"
-              @pointerup="onTilePointerUp"
-              @touchend="onTileTouchEnd"
-              :style="{
-                borderRadius: 'var(--tile-radius, 12px)',
-                transformStyle: 'preserve-3d',
-                backfaceVisibility: 'hidden',
-                touchAction: 'manipulation',
-                WebkitTapHighlightColor: 'transparent',
-                WebkitTransform: 'translateZ(0)',
-              }"
+              ref="sphereRef"
+              class="will-change-transform"
+              style="
+                transform-style: preserve-3d;
+                transform: translateZ(calc(var(--radius) * -1));
+              "
             >
-              <img
-                :src="item.src"
-                draggable="false"
-                :alt="item.alt"
-                class="w-full h-full object-cover pointer-events-none"
+              <div
+                v-for="(item, i) in items"
+                :key="`${item.x},${item.y},${i}`"
+                class="absolute -top-249.75 -bottom-249.75 -left-249.75 -right-249.75 m-auto transition-transform duration-300"
+                :data-src="item.src"
+                :data-offset-x="item.x"
+                :data-offset-y="item.y"
+                :data-size-x="item.sizeX"
+                :data-size-y="item.sizeY"
                 :style="{
+                  '--offset-x': item.x,
+                  '--offset-y': item.y,
+                  '--item-size-x': item.sizeX,
+                  '--item-size-y': item.sizeY,
+                  width: 'calc(var(--item-width) * var(--item-size-x))',
+                  height: 'calc(var(--item-height) * var(--item-size-y))',
+                  transformStyle: 'preserve-3d',
+                  transformOrigin: '50% 50%',
                   backfaceVisibility: 'hidden',
-                  filter: 'var(--image-filter, none)',
+                  transform: `rotateY(calc(var(--rot-y) * (var(--offset-x) + ((var(--item-size-x) - 1) / 2)) + var(--rot-y-delta, 0deg))) rotateX(calc(var(--rot-x) * (var(--offset-y) - ((var(--item-size-y) - 1) / 2)) + var(--rot-x-delta, 0deg))) translateZ(var(--radius))`,
                 }"
-              />
+              >
+                <div
+                  class="absolute block inset-2.5 bg-transparent overflow-hidden transition-transform duration-300 cursor-pointer pointer-events-auto transform translate-z-0 focus:outline-none"
+                  role="button"
+                  tabindex="0"
+                  :aria-label="item.alt || 'Open image'"
+                  @click="onTileClick"
+                  @pointerup="onTilePointerUp"
+                  @touchend="onTileTouchEnd"
+                  :style="{
+                    borderRadius: 'var(--tile-radius, 12px)',
+                    transformStyle: 'preserve-3d',
+                    backfaceVisibility: 'hidden',
+                    touchAction: 'manipulation',
+                    WebkitTapHighlightColor: 'transparent',
+                    WebkitTransform: 'translateZ(0)',
+                  }"
+                >
+                  <img
+                    :src="item.src"
+                    draggable="false"
+                    :alt="item.alt"
+                    class="w-full h-full object-cover pointer-events-none"
+                    :style="{
+                      backfaceVisibility: 'hidden',
+                      filter: 'var(--image-filter, none)',
+                    }"
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div
-        class="absolute inset-0 m-auto z-3 pointer-events-none"
-        :style="{
-          backgroundImage:
-            'radial-gradient(rgba(235, 235, 235, 0) 65%, var(--overlay-blur-color, #060010) 100%)',
-        }"
-      />
-      <div
-        class="absolute inset-0 m-auto z-3 pointer-events-none"
-        :style="{
-          WebkitMaskImage:
-            'radial-gradient(rgba(235, 235, 235, 0) 70%, var(--overlay-blur-color, #060010) 90%)',
-          maskImage:
-            'radial-gradient(rgba(235, 235, 235, 0) 70%, var(--overlay-blur-color, #060010) 90%)',
-          backdropFilter: 'blur(3px)',
-        }"
-      />
-      <div
-        class="absolute left-0 right-0 h-30 z-5 pointer-events-none top-0 rotate-180"
-        :style="{
-          background:
-            'linear-gradient(to bottom, transparent, var(--overlay-blur-color, #060010))',
-        }"
-      />
-      <div
-        class="absolute left-0 right-0 h-30 z-5 pointer-events-none bottom-0"
-        :style="{
-          background:
-            'linear-gradient(to bottom, transparent, var(--overlay-blur-color, #060010))',
-        }"
-      />
+          <div
+            class="absolute inset-0 m-auto z-3 pointer-events-none"
+            :style="{
+              backgroundImage:
+                'radial-gradient(rgba(235, 235, 235, 0) 65%, var(--overlay-blur-color, #060010) 100%)',
+            }"
+          />
+          <div
+            class="absolute inset-0 m-auto z-3 pointer-events-none"
+            :style="{
+              WebkitMaskImage:
+                'radial-gradient(rgba(235, 235, 235, 0) 70%, var(--overlay-blur-color, #060010) 90%)',
+              maskImage:
+                'radial-gradient(rgba(235, 235, 235, 0) 70%, var(--overlay-blur-color, #060010) 90%)',
+              backdropFilter: 'blur(3px)',
+            }"
+          />
+          <div
+            class="absolute left-0 right-0 h-30 z-5 pointer-events-none top-0 rotate-180"
+            :style="{
+              background:
+                'linear-gradient(to bottom, transparent, var(--overlay-blur-color, #060010))',
+            }"
+          />
+          <div
+            class="absolute left-0 right-0 h-30 z-5 pointer-events-none bottom-0"
+            :style="{
+              background:
+                'linear-gradient(to bottom, transparent, var(--overlay-blur-color, #060010))',
+            }"
+          />
 
-      <div
-        ref="viewerRef"
-        class="absolute inset-0 z-20 pointer-events-none flex items-center justify-center"
-        :style="{ padding: 'var(--viewer-pad)' }"
-      >
-        <div
-          ref="scrimRef"
-          class="absolute inset-0 z-10 bg-foreground/40 pointer-events-none opacity-0 transition-opacity duration-500 ease-linear"
-          :style="{ backdropFilter: 'blur(3px)' }"
-        />
-        <div
-          ref="frameRef"
-          class="h-full aspect-square flex max-[1/1]:h-auto max-[1/1]:w-full"
-          :style="{ borderRadius: 'var(--enlarge-radius, 32px)' }"
-        />
+          <div
+            ref="viewerRef"
+            class="absolute inset-0 z-20 pointer-events-none flex items-center justify-center"
+            :style="{ padding: 'var(--viewer-pad)' }"
+          >
+            <div
+              ref="scrimRef"
+              class="absolute inset-0 z-10 bg-foreground/40 pointer-events-none opacity-0 transition-opacity duration-500 ease-linear"
+              :style="{ backdropFilter: 'blur(3px)' }"
+            />
+            <div
+              ref="frameRef"
+              class="h-full aspect-square flex max-[1/1]:h-auto max-[1/1]:w-full"
+              :style="{ borderRadius: 'var(--enlarge-radius, 32px)' }"
+            />
+          </div>
+        </main>
       </div>
-    </main>
-  </div>
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -152,6 +174,8 @@ import {
   useTemplateRef,
   watch,
 } from "vue";
+
+const { $gsap } = useNuxtApp();
 
 interface ImageItem {
   src?: string;
@@ -231,6 +255,7 @@ const props = withDefaults(defineProps<DomeGalleryProps>(), {
 });
 
 const imagesSource = computed(() => props.images || DEFAULT_IMAGES);
+const sectionRef = useTemplateRef<HTMLElement>("sectionRef");
 const rootRef = useTemplateRef<HTMLDivElement>("rootRef");
 const mainRef = useTemplateRef<HTMLElement>("mainRef");
 const sphereRef = useTemplateRef<HTMLDivElement>("sphereRef");
@@ -780,6 +805,35 @@ const onTileTouchEnd = (e: TouchEvent) => {
 onMounted(() => {
   applyTransform(rotation.value.x, rotation.value.y);
   startAutoRotate();
+
+  // Setup GSAP Animations for Text Section
+  if (sectionRef.value) {
+    const ctx = $gsap.context((self) => {
+      const revealItems = self.selector?.('.reveal-item');
+      if (revealItems && revealItems.length > 0) {
+        $gsap.fromTo(
+          revealItems,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.15,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: sectionRef.value,
+              start: "top 80%",
+            },
+          }
+        );
+      }
+    }, sectionRef.value);
+
+    // Clean up GSAP context on unmount
+    onUnmounted(() => {
+      ctx.revert();
+    });
+  }
 
   const root = rootRef.value;
   const main = mainRef.value;
