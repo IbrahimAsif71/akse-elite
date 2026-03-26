@@ -1,18 +1,23 @@
 <template>
   <section class="relative bg-background pt-24 pb-12 overflow-hidden flex flex-col w-full" ref="sectionRef">
     
-    <!-- Text Context Section -->
+    <!-- Text Context Section: Clean Editorial Style -->
     <div class="container mx-auto px-6 lg:px-12 mb-12">
-      <div class="max-w-4xl header-content">
-        <p class="text-xs font-mono tracking-[0.2em] uppercase text-primary/80 mb-6 reveal-item">
-          [ Curated Artifacts ]
-        </p>
-        <h2 class="text-5xl lg:text-7xl xl:text-8xl font-extralight tracking-tight text-foreground leading-[1.0] mb-8 reveal-item">
-          Virtual Space <br/>
-          <span class="text-muted-foreground italic">& Artifacts</span>
-        </h2>
-        <p class="text-lg md:text-xl font-light text-muted-foreground leading-relaxed max-w-2xl reveal-item">
-          Drag to explore. Click to inspect. A multidimensional gallery of physical artifacts digitized for global preservation.
+      <div class="max-w-4xl header-content border-b border-border/40 pb-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div class="flex flex-col gap-4 max-w-xl">
+          <div class="flex items-center gap-4 reveal-item">
+            <div class="w-6 h-px bg-primary/60 flex-shrink-0" />
+            <span class="text-[11px] font-medium tracking-[0.22em] uppercase text-primary/80">
+              Curated Artifacts
+            </span>
+          </div>
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-light text-foreground tracking-tight leading-tight reveal-item">
+            Virtual Space & Artifacts
+          </h2>
+        </div>
+        
+        <p class="text-sm lg:text-base font-light text-muted-foreground leading-relaxed max-w-sm reveal-item">
+          A multidimensional gallery of physical artifacts digitized for global preservation. Drag to explore. Click to inspect.
         </p>
       </div>
     </div>
