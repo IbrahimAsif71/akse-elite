@@ -1,23 +1,17 @@
 <script setup lang="ts">
-import { PortableText } from "@portabletext/vue";
-import { useSanity, urlFor } from "~/utils/sanity";
+import { LOCAL_BLOG_POSTS } from "~/utils/blogData";
 
 const route = useRoute();
 const slug = route.params.slug as string;
-const sanity = useSanity();
 
 const {
   data: post,
   pending,
   error,
-} = await useAsyncData(`blog-${slug}`, () =>
-  sanity.fetch(
-    `*[_type=="blogPost" && slug.current==$slug][0]{
-      _id, title, slug, excerpt, category, author, publishedAt, mainImage, body
-    }`,
-    { slug }
-  )
-);
+} = await useAsyncData(`blog-${slug}`, async () => {
+  const found = LOCAL_BLOG_POSTS.find((p) => p.slug.current === slug);
+  return found || null;
+});
 
 // 404 if not found
 if (!pending.value && !post.value) {
@@ -153,8 +147,9 @@ function formatDate(dateStr?: string) {
         >
           <div class="overflow-hidden rounded-2xl">
             <img
-              :src="urlFor(post.mainImage).width(1200).url()"
+              :src="post.mainImage"
               :alt="post.title"
+              loading="lazy"
               class="w-full object-cover"
             />
           </div>
@@ -162,10 +157,10 @@ function formatDate(dateStr?: string) {
 
         <!-- Body -->
         <div
-          v-if="post.body"
+          v-if="post.bodyHtml"
           class="prose-article mx-auto mt-12 max-w-3xl px-6"
+          v-html="post.bodyHtml"
         >
-          <PortableText :value="post.body" />
         </div>
 
         <!-- Divider + CTA -->

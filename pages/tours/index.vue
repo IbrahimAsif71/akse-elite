@@ -41,9 +41,9 @@ const {
 
 onMounted(() => refresh());
 
-const featured = computed<Tour | null>(() => {
-  const list = tours.value;
-  return list?.length ? (list[0] ?? null) : null;
+const featuredTour = computed(() => {
+  const list = tours.value || [];
+  return list.find((t) => (t.status || "").toLowerCase() !== "in-production") ?? null;
 });
 
 const filteredTours = computed(() => {
@@ -63,23 +63,45 @@ const filteredTours = computed(() => {
 </script>
 
 <template>
-  <div>
-    <ToursFeaturedTour :tour="featured" :url-for="urlFor" />
+  <div class="min-h-screen bg-background selection:bg-primary/20">
+    <!-- Cinematic full-viewport hero -->
+    <ToursFeaturedTour :tour="featuredTour" :url-for="urlFor" />
+
+    <!-- Sticky category filter -->
     <ToursFilterRail v-model="activeCategory" />
 
-    <div v-if="pending" class="py-20 text-center text-muted-foreground">
-      Loading tours…
+    <!-- Loading state -->
+    <div v-if="pending" class="flex items-center justify-center py-24">
+      <div class="flex items-center gap-1.5">
+        <span
+          class="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground"
+          style="animation-delay: 0ms"
+        />
+        <span
+          class="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground"
+          style="animation-delay: 150ms"
+        />
+        <span
+          class="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground"
+          style="animation-delay: 300ms"
+        />
+      </div>
     </div>
-    <div v-else-if="error" class="py-20 text-center text-muted-foreground">
+
+    <!-- Error state -->
+    <div v-else-if="error" class="py-24 text-center text-muted-foreground">
       Error loading tours.
     </div>
 
+    <!-- Tour grid -->
     <ToursUpcomingGrid
       v-else
       :tours="filteredTours"
       :active-category="activeCategory"
       :url-for="urlFor"
     />
+
+    <!-- Commercial conversion teaser -->
     <ToursCommercialTeaser />
   </div>
 </template>

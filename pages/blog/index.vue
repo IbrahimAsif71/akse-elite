@@ -1,17 +1,5 @@
 <script setup lang="ts">
-import { useSanity, urlFor } from "~/utils/sanity";
-
-export type BlogPost = {
-  _id: string;
-  title: string;
-  slug: { current: string };
-  excerpt?: string;
-  category?: string;
-  featured?: boolean;
-  author?: string;
-  publishedAt?: string;
-  mainImage?: any;
-};
+import { LOCAL_BLOG_POSTS, type BlogPost } from "~/utils/blogData";
 
 useSeoMeta({
   title: "Journal — AKSE",
@@ -22,26 +10,13 @@ useSeoMeta({
     "Insights on digital heritage, immersive storytelling, and heritage-tech design.",
 });
 
-const sanity = useSanity();
 const activeCategory = ref("all");
 
 const {
   data: posts,
   pending,
   error,
-  refresh,
-} = await useAsyncData<BlogPost[]>(
-  "blog-posts",
-  () =>
-    sanity.fetch(
-      `*[_type=="blogPost"] | order(publishedAt desc){
-        _id, title, slug, excerpt, category, featured, author, publishedAt, mainImage
-      }`
-    ),
-  { server: true }
-);
-
-onMounted(() => refresh());
+} = await useAsyncData<BlogPost[]>("blog-posts", async () => LOCAL_BLOG_POSTS);
 
 // Featured post = first one marked featured, or the latest
 const featured = computed<BlogPost | null>(() => {
@@ -120,8 +95,9 @@ function categorySlug(cat: string) {
         <div class="relative aspect-[16/10] overflow-hidden md:aspect-auto md:min-h-[380px]">
           <img
             v-if="featured.mainImage"
-            :src="urlFor(featured.mainImage).width(900).height(560).url()"
+            :src="featured.mainImage"
             :alt="featured.title"
+            loading="lazy"
             class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div
@@ -249,8 +225,9 @@ function categorySlug(cat: string) {
           <div class="relative aspect-[16/10] overflow-hidden">
             <img
               v-if="post.mainImage"
-              :src="urlFor(post.mainImage).width(600).height(375).url()"
+              :src="post.mainImage"
               :alt="post.title"
+              loading="lazy"
               class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <div

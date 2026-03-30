@@ -12,19 +12,19 @@ const categories = [
 </script>
 
 <template>
-  <div class="sticky top-0 z-30 border-b border-border bg-background">
+  <div class="sticky top-16 z-30 border-b border-border/50 bg-background/90 backdrop-blur-xl">
     <div
-      class="mx-auto flex max-w-7xl gap-3 overflow-x-auto px-6 py-3 scrollbar-hide"
+      class="mx-auto flex max-w-7xl items-center gap-1.5 overflow-x-auto px-6 py-3 scrollbar-hide"
     >
       <button
         v-for="cat in categories"
         :key="cat.slug"
         type="button"
         :class="[
-          'shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-colors',
+          'shrink-0 rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200',
           modelValue === cat.slug
             ? 'bg-primary text-primary-foreground'
-            : 'bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground',
+            : 'text-muted-foreground hover:bg-muted hover:text-foreground',
         ]"
         @click="emit('update:modelValue', cat.slug)"
       >
