@@ -49,7 +49,7 @@ function handleSubmit() {
     .filter((l) => l !== null)
     .join("\n");
 
-  window.location.href = `mailto:hello@akse-elite.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = `mailto:Akse360@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   submitted.value = true;
 }
 
@@ -109,9 +109,9 @@ const inputError =
         Your email client should have opened with a pre-filled message. If it
         didn't, email us directly at
         <a
-          href="mailto:hello@akse-elite.com"
+          href="mailto:Akse360@gmail.com"
           class="font-medium text-primary underline underline-offset-2"
-        >hello@akse-elite.com</a>.
+        >Akse360@gmail.com</a>.
       </p>
     </div>
 
@@ -233,9 +233,9 @@ const inputError =
     <p class="mt-6 text-center text-sm text-muted-foreground">
       Prefer email?
       <a
-        href="mailto:hello@akse-elite.com"
+        href="mailto:Akse360@gmail.com"
         class="font-medium text-foreground underline underline-offset-2 transition-colors hover:text-primary"
-      >hello@akse-elite.com</a>
+      >Akse360@gmail.com</a>
     </p>
   </section>
 </template>

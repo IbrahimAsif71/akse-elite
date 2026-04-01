@@ -298,7 +298,7 @@ function categorySlug(cat: string) {
           Let's craft an immersive digital experience together.
         </p>
         <NuxtLink
-          to="/contact"
+          to="/commercial"
           class="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90"
         >
           Start a Project

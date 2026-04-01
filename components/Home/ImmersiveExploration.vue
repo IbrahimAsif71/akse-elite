@@ -132,8 +132,8 @@ onBeforeUnmount(() => {
         <!-- Bottom info overlay -->
         <div class="absolute bottom-0 left-0 right-0 p-8 lg:p-12 flex items-end justify-between">
           <div>
-            <p class="text-[10px] font-medium tracking-[0.2em] uppercase text-white/50 mb-1">Currently Viewing</p>
-            <p class="text-lg lg:text-2xl font-light text-white leading-snug">Lahore Old City — Pakistan</p>
+            <p class="text-[10px] font-medium tracking-[0.2em] uppercase text-black/50 mb-1">Currently Viewing</p>
+            <p class="text-lg lg:text-2xl font-light text-black leading-snug">Golra Railway Station — Islamabad</p>
           </div>
           <div class="hidden md:flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2.5">
             <div class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />

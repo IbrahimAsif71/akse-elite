@@ -1,57 +1,75 @@
 <script setup lang="ts">
 const packages = [
   {
-    name: "Essentials",
+    name: "Silver Package",
     badge: null,
-    price: "$1,200",
-    priceNote: "starting from",
-    tagline:
-      "For small commercial spaces that need a clean, professional virtual presence.",
+    price: "Rs 300",
+    priceNote: "per m²",
+    tagline: "Essential Immersion",
     features: [
-      "Up to 500 sq. ft capture",
-      "Standard 360° panoramas",
-      "Web-embeddable tour link",
-      "Basic hotspot navigation",
-      "1 revision round",
-      "2-week delivery",
+      "4-6 high-quality 360° nodes",
+      "Simple linear pathway",
+      "Basic stitching & color correction",
+      "Web embedding",
+      "Branding",
+      "Mobile-friendly",
+      "Delivered in 3-5 days",
+      "1 month free hosting",
     ],
-    cta: "Get Started",
+    cta: "Request Quote",
     highlighted: false,
   },
   {
-    name: "Studio",
+    name: "Gold Package",
     badge: "Most Popular",
-    price: "$3,500",
-    priceNote: "starting from",
-    tagline:
-      "For brands that want a polished, fully branded experience that commands attention.",
+    price: "Rs 340",
+    priceNote: "per m²",
+    tagline: "Enhanced Digital Tour",
     features: [
-      "Up to 3,000 sq. ft capture",
-      "Cinematic 360° + depth mapping",
-      "Custom-branded web player",
-      "Interactive hotspots & floor plan",
-      "3 revision rounds",
-      "4-week delivery",
-      "1 year hosting included",
+      "8-12 nodes",
+      "Hotspots (menu, offers, details)",
+      "HDR quality",
+      "Color grading",
+      "Optional music",
+      "Social media-ready",
+      "2 months hosting",
     ],
-    cta: "Get Started",
+    cta: "Request Quote",
     highlighted: true,
   },
   {
-    name: "Flagship",
+    name: "Sapphire Package",
     badge: null,
-    price: "Custom",
-    priceNote: "let's talk",
-    tagline:
-      "Full-scale productions for museums, large venues, and premium brand experiences.",
+    price: "Rs 400",
+    priceNote: "per m²",
+    tagline: "Premium Immersive Experience",
     features: [
-      "Unlimited space & multi-location",
-      "Full cinematic 3D production",
-      "WebXR & VR headset ready",
-      "Custom interactive features",
-      "White-label delivery",
-      "Dedicated project manager",
-      "Ongoing support & updates",
+      "15-25 nodes",
+      "Multi-floor",
+      "Narration",
+      "Custom branding",
+      "Analytics",
+      "6 months hosting",
+      "Teaser video",
+    ],
+    cta: "Request Quote",
+    highlighted: false,
+  },
+  {
+    name: "Diamond Package",
+    badge: "Flagship",
+    price: "Rs 500",
+    priceNote: "per m²",
+    tagline: "Flagship Digital Twin",
+    features: [
+      "40+ nodes",
+      "Drone pathway",
+      "Full 3D twin",
+      "Storytelling layers",
+      "AI analytics",
+      "Microsite",
+      "1-year hosting",
+      "Press kit",
     ],
     cta: "Contact Sales",
     highlighted: false,
@@ -91,8 +109,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section id="packages" ref="gridRef" class="mx-auto max-w-6xl px-6 py-16">
-    <div class="grid grid-cols-1 items-stretch gap-6 md:grid-cols-3">
+  <section id="packages" ref="gridRef" class="mx-auto max-w-[1400px] px-6 py-16">
+    <div class="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:grid-cols-4">
       <div
         v-for="pkg in packages"
         :key="pkg.name"

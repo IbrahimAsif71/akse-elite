@@ -170,7 +170,7 @@ function formatDate(dateStr?: string) {
               Interested in preserving your heritage site?
             </p>
             <NuxtLink
-              to="/contact"
+              to="/commercial"
               class="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90"
             >
               Start a Project

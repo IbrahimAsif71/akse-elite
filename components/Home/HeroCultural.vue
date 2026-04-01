@@ -177,7 +177,7 @@ onBeforeUnmount(() => {
         <!-- Count pill -->
         <div class="flex items-center gap-2 mt-1">
           <div class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          <span class="text-[10px] text-white/35 tracking-wide">50+ locations captured</span>
+          <span class="text-[10px] text-white/35 tracking-wide">Multiple locations captured</span>
         </div>
       </div>
 
