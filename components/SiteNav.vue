@@ -121,7 +121,7 @@ onMounted(() => {
 
       <!-- Desktop controls -->
       <div class="hidden items-center gap-2 md:flex">
-        <NuxtLink to="/contact" :class="buttonVariants({ variant: 'default' })">
+        <NuxtLink to="/commercial" :class="buttonVariants({ variant: 'default' })">
           Start Project
         </NuxtLink>
       </div>
@@ -181,7 +181,7 @@ onMounted(() => {
 
             <div class="mt-6 px-3">
               <NuxtLink
-                to="/contact"
+                to="/commercial"
                 :class="buttonVariants({ variant: 'default', class: 'w-full' })"
                 @click="drawerOpen = false"
               >

@@ -210,7 +210,7 @@ onMounted(() => {
             </p>
 
             <div class="mt-5">
-               <NuxtLink to="/contact">
+               <NuxtLink to="/commercial">
                  <button class="px-5 py-2 rounded-full bg-white text-black font-medium text-xs tracking-wide hover:bg-white/90 transition-colors uppercase w-full">
                    Start A Project
                  </button>

@@ -37,7 +37,7 @@
 | **What they do**         | Archival-grade 3D and 360° immersive virtual tours for heritage sites, museums, and premium commercial spaces    |
 | **Services**             | 360° Immersive Tours · Digital Heritage Preservation · Museum & Cultural Archiving · Commercial Immersive Spaces |
 | **Location**             | Islamabad / Rawalpindi, Pakistan                                                                                 |
-| **Email**                | akse360@gmail.com                                                                                                |
+| **Email**                | Akse360@gmail.com                                                                                                |
 | **Instagram**            | [@akse.lab](https://instagram.com/akse.lab)                                                                      |
 | **LinkedIn / YouTube**   | Placeholder links (not yet live)                                                                                 |
 | **Process**              | Assessment → Capture → Pathway Design → Optimization → Deployment                                                |
@@ -335,7 +335,7 @@ Large single page with these sections:
 
 - All three are currently identical static pages
 - Title "Privacy Policy", effective date 2026-03-01
-- Sections: What we collect, How we use it, Third parties, Contact (hello@akse.com)
+- Sections: What we collect, How we use it, Third parties, Contact (Akse360@gmail.com)
 
 ---
 

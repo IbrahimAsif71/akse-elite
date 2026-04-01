@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
         <!-- Assuming MagneticWrapper is globally registered or imported elsewhere if needed.
              Since it was here before, we keep it. -->
         <component :is="'MagneticWrapper'" :strength="0.4" class="inline-block">
-          <NuxtLink to="/contact" class="group relative inline-flex items-center justify-center">
+          <NuxtLink to="/commercial" class="group relative inline-flex items-center justify-center">
             
             <div class="absolute inset-0 bg-primary/10 rounded-full scale-50 opacity-0 group-hover:scale-150 group-hover:opacity-100 transition-all duration-700 ease-out z-0 blur-xl"></div>
             

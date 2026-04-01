@@ -9,7 +9,7 @@ interface HeroCopy {
 const heroCopy: HeroCopy = {
   headline: "Preserving the Past. Building the Future.",
   tagline: "A behind-the-lens look at how AKSE works.",
-  heroImage: "/images/about/hero-camera-rig.jpg",
+  heroImage: "/image1.jpeg",
   heroImageAlt: "AKSE camera rig set up at a heritage site",
 };
 
@@ -106,16 +106,5 @@ onBeforeUnmount(() => {
     >
       {{ heroCopy.tagline }}
     </p>
-
-    <div
-      class="mt-12 w-full max-w-6xl overflow-hidden rounded-2xl bg-muted aspect-[21/9] md:aspect-[16/7]"
-    >
-      <img
-        ref="imageRef"
-        :src="heroCopy.heroImage"
-        :alt="heroCopy.heroImageAlt"
-        class="h-full w-full scale-[1.08] object-cover"
-      />
-    </div>
   </section>
 </template>

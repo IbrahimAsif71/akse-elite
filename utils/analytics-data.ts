@@ -49,8 +49,8 @@ export interface GeoData {
 export const statCards: StatCard[] = [
   {
     label: "Total Tours",
-    value: "12",
-    change: "+3",
+    value: "4",
+    change: "+1",
     trend: "up",
     icon: "map",
   },
@@ -103,14 +103,10 @@ export const dailyVisitors: DailyVisitors[] = generateDailyVisitors();
 // ── Tour Performance ────────────────────────────────
 
 export const tourPerformance: TourPerformance[] = [
-  { name: "Badshahi Mosque", views: 4820, color: "#c9653d" },
-  { name: "Lahore Fort", views: 3940, color: "#d4784e" },
-  { name: "Shalimar Gardens", views: 3210, color: "#2c7a83" },
-  { name: "Faisal Mosque", views: 2870, color: "#3a8f99" },
-  { name: "Mohenjo-daro", views: 2340, color: "#c9653d" },
-  { name: "Taxila Museum", views: 1890, color: "#d4784e" },
-  { name: "Rohtas Fort", views: 1520, color: "#2c7a83" },
-  { name: "Makli Necropolis", views: 1180, color: "#3a8f99" },
+  { name: "Golra Railway Station", views: 4820, color: "#c9653d" },
+  { name: "Dome Restaurant", views: 3940, color: "#d4784e" },
+  { name: "Saidpur Village", views: 3210, color: "#2c7a83" },
+  { name: "Serena Hotel", views: 2870, color: "#3a8f99" },
 ];
 
 // ── Traffic Sources ─────────────────────────────────
@@ -127,7 +123,7 @@ export const trafficSources: TrafficSource[] = [
 export const topTours: TopTour[] = [
   {
     rank: 1,
-    name: "Badshahi Mosque",
+    name: "Golra Railway Station",
     views: 4820,
     avgDuration: "6m 12s",
     completionRate: 78,
@@ -135,7 +131,7 @@ export const topTours: TopTour[] = [
   },
   {
     rank: 2,
-    name: "Lahore Fort",
+    name: "Dome Restaurant",
     views: 3940,
     avgDuration: "5m 48s",
     completionRate: 72,
@@ -143,7 +139,7 @@ export const topTours: TopTour[] = [
   },
   {
     rank: 3,
-    name: "Shalimar Gardens",
+    name: "Saidpur Village",
     views: 3210,
     avgDuration: "4m 55s",
     completionRate: 81,
@@ -151,43 +147,11 @@ export const topTours: TopTour[] = [
   },
   {
     rank: 4,
-    name: "Faisal Mosque",
+    name: "Serena Hotel",
     views: 2870,
     avgDuration: "5m 20s",
     completionRate: 69,
     status: "live",
-  },
-  {
-    rank: 5,
-    name: "Mohenjo-daro",
-    views: 2340,
-    avgDuration: "7m 05s",
-    completionRate: 85,
-    status: "live",
-  },
-  {
-    rank: 6,
-    name: "Taxila Museum",
-    views: 1890,
-    avgDuration: "4m 30s",
-    completionRate: 64,
-    status: "in-production",
-  },
-  {
-    rank: 7,
-    name: "Rohtas Fort",
-    views: 1520,
-    avgDuration: "5m 10s",
-    completionRate: 71,
-    status: "live",
-  },
-  {
-    rank: 8,
-    name: "Makli Necropolis",
-    views: 1180,
-    avgDuration: "6m 45s",
-    completionRate: 88,
-    status: "in-production",
   },
 ];
 

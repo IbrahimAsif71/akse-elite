@@ -72,10 +72,10 @@ onUnmounted(() => {
 
           <div class="mt-12 md:mt-0">
             <a
-              href="mailto:hello@akse.studio"
+              href="mailto:Akse360@gmail.com"
               class="group relative inline-block text-xl font-medium tracking-tight transition-colors hover:text-primary md:text-2xl"
             >
-              hello@akse.studio
+              Akse360@gmail.com
               <span
                 class="absolute -bottom-1 left-0 h-0.5 w-0 bg-primary transition-all duration-300 group-hover:w-full"
               ></span>
