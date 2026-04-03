@@ -1,3 +1,8 @@
+export interface GalleryPhoto {
+  src: string;
+  caption?: string;
+}
+
 export interface BlogPost {
   _id: string;
   title: string;
@@ -9,6 +14,7 @@ export interface BlogPost {
   publishedAt?: string;
   mainImage?: any;
   bodyHtml?: string;
+  gallery?: GalleryPhoto[];
 }
 
 export const LOCAL_BLOG_POSTS: BlogPost[] = [
@@ -22,6 +28,14 @@ export const LOCAL_BLOG_POSTS: BlogPost[] = [
     author: "AKSE Editorial",
     publishedAt: new Date().toISOString(),
     mainImage: "/golra.jpeg",
+    gallery: [
+      { src: "/golra.jpeg",  caption: "The Victorian-era station platform, 1882" },
+      { src: "/image7.jpeg", caption: "Mechanical clock frozen at 1947" },
+      { src: "/image8.jpeg", caption: "Original teak woodwork detail" },
+      { src: "/image9.jpeg", caption: "The 1888 Royal Saloon carriage" },
+      { src: "/image10.jpeg", caption: "Arched windows & sandstone masonry" },
+      { src: "/image11.jpeg", caption: "Heritage rail exhibits" },
+    ],
     bodyHtml: `
 <h2>The Atmosphere of 1882</h2>
 <p>There is a specific kind of silence at Golra Sharif—a quietude that only exists where a century and a half of history rests under the shade of ancient Banyan trees. As you walk toward the Victorian-era station, the air feels heavier, thick with the scent of rusted iron and aged teak. Built in 1882 during the height of the British Raj’s railway expansion, this junction was a colonial outpost of engineering marvel.</p>
@@ -43,6 +57,14 @@ export const LOCAL_BLOG_POSTS: BlogPost[] = [
     author: "AKSE Editorial",
     publishedAt: new Date(Date.now() - 86400000).toISOString(),
     mainImage: "/saidpur.jpeg",
+    gallery: [
+      { src: "/saidpur.jpeg",  caption: "The cobbled streets of Saidpur Village" },
+      { src: "/image4.jpeg",   caption: "Mughal-era stonework at the village entrance" },
+      { src: "/image5.jpeg",   caption: "The Rama Mandir temple compound" },
+      { src: "/image6.jpeg",   caption: "Artisan's Alley — potters at work" },
+      { src: "/image12.jpeg",  caption: "Multi-faith architecture side-by-side" },
+      { src: "/image13.jpeg",  caption: "Ravine of the Margalla Hills" },
+    ],
     bodyHtml: `
 <h2>The Ravine of Memories</h2>
 <p>Nestled in a lush ravine of the Margalla Hills, Saidpur Village is a living museum of human coexistence. Founded in 1530 by Mirza Fateh Ali, this village has served as a sanctuary for half a millennium. Long before it became a destination for modern leisure, it was a sacred site where Hindu pilgrims bathed in the Rama Kunda ponds and Sikh devotees gathered in the Gurdwara.</p>
@@ -64,6 +86,13 @@ export const LOCAL_BLOG_POSTS: BlogPost[] = [
     author: "AKSE Editorial",
     publishedAt: new Date(Date.now() - 172800000).toISOString(),
     mainImage: "/dome.jpeg",
+    gallery: [
+      { src: "/dome.jpeg",   caption: "The Dome Restaurant panorama at dusk" },
+      { src: "/image1.jpeg", caption: "Interior dining terrace" },
+      { src: "/image2.jpeg", caption: "Terrace overlooking Islamabad" },
+      { src: "/image3.jpeg", caption: "Golden hour over Faisal Mosque" },
+      { src: "/image14.jpeg", caption: "Hilltop skyline at twilight" },
+    ],
     bodyHtml: `
 <h2>The Heart of the Hills</h2>
 <p>Perched 2,400 feet above sea level, Daman-e-Koh has long been the "midpoint" of Islamabad—a place where the rugged beauty of the Margalla Hills meets the planned precision of the city below. Long before the modern skyline took shape, this viewpoint served as a natural sanctuary, offering a perspective of the Potohar Plateau that has captivated travelers for decades.</p>

@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useQueries } from "~/composables/useQueries";
+
+const { save: saveQuery } = useQueries();
+
 const formRef = ref<HTMLElement | null>(null);
 
 onMounted(() => {
@@ -21,25 +25,42 @@ onMounted(() => {
   });
 });
 
+const firstName = ref("");
+const lastName = ref("");
+const email = ref("");
+const message = ref("");
 const isSubmitting = ref(false);
 const showSuccess = ref(false);
 
 const handleSubmit = (e: Event) => {
   e.preventDefault();
   isSubmitting.value = true;
-  
-  // Simulate API call since no actual API integration is required yet
+
+  // Save query to localStorage so it shows in the admin dashboard
+  saveQuery({
+    source: "contact",
+    name: `${firstName.value} ${lastName.value}`.trim(),
+    email: email.value,
+    message: message.value,
+  });
+
   setTimeout(() => {
     isSubmitting.value = false;
     showSuccess.value = true;
-    
-    // Reset form success message after a few seconds
+
+    // Reset form
+    firstName.value = "";
+    lastName.value = "";
+    email.value = "";
+    message.value = "";
+
     setTimeout(() => {
       showSuccess.value = false;
     }, 5000);
   }, 1000);
 };
 </script>
+
 
 <template>
   <section class="border-t border-border/20 py-24">
@@ -66,6 +87,7 @@ const handleSubmit = (e: Event) => {
                 </label>
                 <input
                   id="firstName"
+                  v-model="firstName"
                   type="text"
                   required
                   class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
@@ -78,6 +100,7 @@ const handleSubmit = (e: Event) => {
                 </label>
                 <input
                   id="lastName"
+                  v-model="lastName"
                   type="text"
                   required
                   class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
@@ -92,6 +115,7 @@ const handleSubmit = (e: Event) => {
               </label>
               <input
                 id="email"
+                v-model="email"
                 type="email"
                 required
                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
@@ -105,6 +129,7 @@ const handleSubmit = (e: Event) => {
               </label>
               <textarea
                 id="message"
+                v-model="message"
                 required
                 rows="4"
                 class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"

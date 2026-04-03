@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { Button } from "~/components/ui/button";
+import { useQueries } from "~/composables/useQueries";
+
+const { save: saveQuery } = useQueries();
 
 const form = reactive({
   name: "",
@@ -33,24 +36,38 @@ function validate() {
   return Object.keys(e).length === 0;
 }
 
-function handleSubmit() {
+const isSubmitting = ref(false);
+
+async function handleSubmit() {
   Object.keys(errors).forEach((k) => delete errors[k]);
   if (!validate()) return;
 
-  const subject = `Commercial Inquiry — ${form.company || form.name}`;
-  const body = [
-    `Name: ${form.name}`,
-    `Email: ${form.email}`,
-    form.company ? `Company: ${form.company}` : null,
-    form.spaceType ? `Space Type: ${form.spaceType}` : null,
-    "",
-    form.message,
-  ]
-    .filter((l) => l !== null)
-    .join("\n");
+  isSubmitting.value = true;
 
-  window.location.href = `mailto:Akse360@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  submitted.value = true;
+  // Save query to Supabase
+  const result = await saveQuery({
+    source: "commercial",
+    name: form.name,
+    email: form.email,
+    company: form.company || null,
+    space_type: form.spaceType || null,
+    message: form.message,
+  });
+
+  isSubmitting.value = false;
+
+  if (result) {
+    submitted.value = true;
+    // Reset form
+    form.name = "";
+    form.email = "";
+    form.company = "";
+    form.spaceType = "";
+    form.message = "";
+  } else {
+    // fallback: surface a generic error
+    errors.submit = "Something went wrong. Please email us directly at Akse360@gmail.com";
+  }
 }
 
 const inputBase =
@@ -222,11 +239,23 @@ const inputError =
       <!-- Submit -->
       <Button
         type="submit"
+        :disabled="isSubmitting"
         size="lg"
-        class="w-full rounded-full bg-foreground text-background shadow-md transition-all hover:bg-foreground/90 hover:shadow-lg"
+        class="w-full rounded-full bg-foreground text-background shadow-md transition-all hover:bg-foreground/90 hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        Send Inquiry
+        <span v-if="isSubmitting" class="flex items-center justify-center gap-2">
+          <svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+          </svg>
+          Sending…
+        </span>
+        <span v-else>Send Inquiry</span>
       </Button>
+
+      <p v-if="errors.submit" class="text-center text-sm text-destructive">
+        {{ errors.submit }}
+      </p>
     </form>
 
     <!-- Direct contact note -->

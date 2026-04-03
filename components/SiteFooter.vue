@@ -16,7 +16,7 @@ const legalLinks = [
 ];
 
 const socialLinks = [
-  { label: "Instagram", href: "#" },
+  { label: "Instagram", href: "https://www.instagram.com/akse.lab/" },
   { label: "LinkedIn", href: "#" },
   { label: "X / Twitter", href: "#" },
 ];
