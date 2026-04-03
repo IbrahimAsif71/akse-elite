@@ -216,10 +216,10 @@ const DEFAULT_IMAGES: ImageItem[] = [
   { src: "/image6.jpeg", alt: "Cultural space" },
   { src: "/image7.jpeg", alt: "Heritage artifact" },
   { src: "/image8.jpeg", alt: "Virtual artifact" },
-  { src: "/images/tours/lahore_old_city_heritage_1773010984542.png", alt: "Lahore Old City" },
-  { src: "/images/tours/rohtas_fort_heritage_1773010968806.png", alt: "Rohtas Fort" },
-  { src: "/images/tours/taxila_museum_heritage_1773011014212.png", alt: "Taxila Museum" },
-  { src: "/images/tours/hunza_valley_adventure_1773011000439.png", alt: "Hunza Valley" },
+  { src: "/image9.jpeg", alt: "Virtual artifact" },
+  { src: "/image10.jpeg", alt: "Taxila Museum" },
+  { src: "/image11.jpeg", alt: "Hunza Valley" },
+  { src: "/image12.jpeg", alt: "Hunza Valley" },
 ];
 
 const AUTO_ROTATE_SPEED_DEG_PER_MS = 0.008;

@@ -23,7 +23,7 @@ const EXPERIENCE_CARDS: ExperienceCard[] = [
   {
     title: "Saidpur Village",
     category: "Heritage",
-    image: "/images/tours/rohtas_fort_heritage_1773010968806.png",
+    image: "/saidpur.jpeg",
     alt: "Saidpur Village — historic Mughal-era village in Islamabad",
     slug: "saidpur-village",
     number: "02",
@@ -31,7 +31,7 @@ const EXPERIENCE_CARDS: ExperienceCard[] = [
   {
     title: "Dome Restaurant",
     category: "Hospitality",
-    image: "/images/tours/taxila_museum_heritage_1773011014212.png",
+    image: "/dome.jpeg",
     alt: "Dome Restaurant — premium dining experience",
     slug: "dome-restaurant",
     number: "03",
@@ -39,7 +39,7 @@ const EXPERIENCE_CARDS: ExperienceCard[] = [
   {
     title: "Serena Hotel",
     category: "Hospitality",
-    image: "/images/tours/hunza_valley_adventure_1773011000439.png",
+    image: "serena.jpeg",
     alt: "Serena Hotel — luxury 5-star hotel in Islamabad",
     slug: "serena-hotel",
     number: "04",

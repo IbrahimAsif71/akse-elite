@@ -10,12 +10,12 @@ const ctaRef = ref<HTMLElement | null>(null);
 const galleryRef = ref<HTMLElement | null>(null);
 
 const spaces = [
-  { src: "/images/tours/lahore_old_city_heritage_1773010984542.png", label: "Lahore Old City" },
-  { src: "/image1.jpeg", label: "Heritage Site" },
-  { src: "/images/tours/rohtas_fort_heritage_1773010968806.png", label: "Rohtas Fort" },
-  { src: "/image2.jpeg", label: "Artifact Space" },
-  { src: "/images/tours/taxila_museum_heritage_1773011014212.png", label: "Taxila Museum" },
-  { src: "/image3.jpeg", label: "Virtual Space" },
+  { src: "/images/tours/lahore_old_city_heritage_1773010984542.png", label: "Golra Station" },
+  { src: "/image1.jpeg", label: "Dome Restaurant" },
+  { src: "/image2.jpeg", label: "Dome Restaurant" },
+  { src: "/image3.jpeg", label: "Dome Restaurant" },
+  { src: "/image4.jpeg", label: "Saidpur Village" },
+  { src: "/image6.jpeg", label: "Saidpur Village" },
 ];
 
 let ctx: ReturnType<typeof $gsap.context> | null = null;
