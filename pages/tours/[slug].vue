@@ -156,7 +156,7 @@ onMounted(() => {
 
       <!-- Top Tools Bar -->
       <div ref="topBar" class="absolute top-6 left-6 right-6 md:top-8 md:left-8 md:right-8 z-20 pointer-events-auto flex justify-between items-start">
-        <NuxtLink to="/tours" class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-black/40 backdrop-blur-md text-white/90 hover:bg-black/60 hover:text-white transition-all text-xs tracking-wider uppercase">
+        <NuxtLink to="/tours" class="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-black/40 backdrop-blur-md text-white/90 hover:bg-black/60 hover:text-white transition-all text-xs tracking-wider uppercase">
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
@@ -164,7 +164,7 @@ onMounted(() => {
         </NuxtLink>
 
         <!-- Fullscreen Toggle Button -->
-        <button @click="toggleFullscreen" class="p-2.5 rounded-full border border-white/20 bg-black/40 backdrop-blur-md text-white/90 hover:bg-black/60 hover:text-white transition-all">
+        <button @click="toggleFullscreen" class="hidden md:block p-2.5 rounded-full border border-white/20 bg-black/40 backdrop-blur-md text-white/90 hover:bg-black/60 hover:text-white transition-all">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
           </svg>
@@ -172,7 +172,7 @@ onMounted(() => {
       </div>
 
       <!-- UI Overlay Layer: Floating Info Panel (Bottom Left) -->
-      <div ref="uiPanel" class="absolute bottom-6 left-6 right-6 md:left-8 md:bottom-8 md:max-w-md lg:max-w-lg z-20 pointer-events-auto">
+      <div ref="uiPanel" class="hidden md:block absolute bottom-6 left-6 right-6 md:left-8 md:bottom-8 md:max-w-md lg:max-w-lg z-20 pointer-events-auto">
         <div class="p-5 md:p-7 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl flex flex-col">
           
           <!-- Persistent Header -->

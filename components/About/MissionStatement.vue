@@ -78,10 +78,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section ref="sectionRef" class="px-6 py-24 md:py-32 lg:px-12">
+  <section ref="sectionRef" class="px-6 py-32 md:py-48 lg:px-12">
     <div class="mx-auto max-w-5xl">
       <!-- Mission lines -->
-      <div class="mb-24 md:mb-32">
+      <div class="mb-32 md:mb-48">
         <span
           v-for="(line, i) in missionLines"
           :key="i"

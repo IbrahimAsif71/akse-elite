@@ -32,7 +32,7 @@ const techItems: TechItem[] = [
 </script>
 
 <template>
-  <section class="px-6 py-24 md:py-32 lg:px-12">
+  <section class="mt-16 px-6 py-32 md:mt-0 md:py-48 lg:px-12">
     <div class="mx-auto max-w-7xl">
 
       <!-- Section label -->

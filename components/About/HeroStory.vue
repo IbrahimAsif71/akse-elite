@@ -83,10 +83,10 @@ onBeforeUnmount(() => {
 <template>
   <section
     ref="heroRef"
-    class="relative flex min-h-screen flex-col items-center justify-center px-6 py-24"
+    class="relative flex min-h-screen flex-col items-center justify-center px-6 py-32 md:py-48"
   >
     <h1
-      class="text-center text-5xl font-bold leading-tight tracking-tight text-foreground md:text-7xl lg:text-8xl"
+      class="text-center text-4xl font-bold leading-tight tracking-tight text-foreground md:text-7xl lg:text-8xl"
     >
       <span
         v-for="(word, i) in words"

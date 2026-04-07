@@ -130,7 +130,7 @@ onBeforeUnmount(() => {
   <!-- Change to h-screen so it fully fills viewport when pinned -->
   <section
     ref="sectionRef"
-    class="flex h-screen flex-col justify-center px-6 py-12 md:py-24 lg:px-12"
+    class="flex min-h-screen flex-col justify-center px-6 py-32 md:h-screen md:py-0 lg:px-12"
   >
     <div class="mx-auto flex w-full max-w-7xl flex-col md:grid md:grid-cols-2 md:items-center md:gap-16">
       <!-- Left column: sticky header + image stack -->
@@ -164,12 +164,12 @@ onBeforeUnmount(() => {
       </div>
 
       <!-- Right column: text steps -->
-      <div class="relative min-h-[50vh] w-full md:h-[400px]">
+      <div class="relative w-full md:h-[400px]">
         <div
           v-for="(step, i) in steps"
           :key="step.number"
           :ref="(el) => setStepRef(el as any, i)"
-          class="flex flex-col justify-center bg-background md:absolute md:inset-0 md:bg-transparent"
+          class="flex flex-col justify-center bg-background py-16 md:absolute md:inset-0 md:bg-transparent md:py-0"
           style="will-change: opacity, visibility;"
         >
           <!-- Mobile inline image (not animated on scroll) -->
