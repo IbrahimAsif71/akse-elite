@@ -49,29 +49,29 @@ export interface GeoData {
 export const statCards: StatCard[] = [
   {
     label: "Total Tours",
-    value: "4",
-    change: "+1",
+    value: "6",
+    change: "+2",
     trend: "up",
     icon: "map",
   },
   {
     label: "Total Visitors",
-    value: "24,832",
-    change: "+18.2%",
+    value: "17,234",
+    change: "+18.20%",
     trend: "up",
     icon: "users",
   },
   {
     label: "Avg. Session",
-    value: "4m 32s",
-    change: "+12%",
+    value: "4m 53s",
+    change: "+7.7%",
     trend: "up",
     icon: "clock",
   },
   {
     label: "Bounce Rate",
-    value: "34.1%",
-    change: "-2.3%",
+    value: "29.48%",
+    change: "-4.62%",
     trend: "down",
     icon: "activity",
   },
@@ -85,7 +85,7 @@ function generateDailyVisitors(): DailyVisitors[] {
   for (let i = 29; i >= 0; i--) {
     const d = new Date(today);
     d.setDate(d.getDate() - i);
-    const base = 600 + Math.floor(Math.random() * 400);
+    const base = 450 + Math.floor(Math.random() * 280);
     const weekday = d.getDay();
     const multiplier = weekday === 0 || weekday === 6 ? 0.7 : 1;
     const visitors = Math.floor(base * multiplier);
@@ -103,10 +103,12 @@ export const dailyVisitors: DailyVisitors[] = generateDailyVisitors();
 // ── Tour Performance ────────────────────────────────
 
 export const tourPerformance: TourPerformance[] = [
-  { name: "Golra Railway Station", views: 4820, color: "#c9653d" },
-  { name: "Dome Restaurant", views: 3940, color: "#d4784e" },
-  { name: "Saidpur Village", views: 3210, color: "#2c7a83" },
-  { name: "Serena Hotel", views: 2870, color: "#3a8f99" },
+  { name: "Golra Railway Station", views: 5350, color: "#c9653d" },
+  { name: "Dome Restaurant", views: 4980, color: "#d4784e" },
+  { name: "Saidpur Village", views: 3620, color: "#2c7a83" },
+  { name: "Serena Hotel", views: 3284, color: "#3a8f99" },
+  { name: "Rewat Fort", views: 1840, color: "#a0522d" },
+  { name: "Nouvelle by Shadiyana", views: 1560, color: "#5ba3ac" },
 ];
 
 // ── Traffic Sources ─────────────────────────────────
@@ -124,33 +126,49 @@ export const topTours: TopTour[] = [
   {
     rank: 1,
     name: "Golra Railway Station",
-    views: 4820,
-    avgDuration: "6m 12s",
+    views: 5350,
+    avgDuration: "6m 20s",
     completionRate: 78,
     status: "live",
   },
   {
     rank: 2,
     name: "Dome Restaurant",
-    views: 3940,
-    avgDuration: "5m 48s",
+    views: 4980,
+    avgDuration: "5m 55s",
     completionRate: 72,
     status: "live",
   },
   {
     rank: 3,
     name: "Saidpur Village",
-    views: 3210,
-    avgDuration: "4m 55s",
+    views: 3620,
+    avgDuration: "5m 05s",
     completionRate: 81,
     status: "live",
   },
   {
     rank: 4,
     name: "Serena Hotel",
-    views: 2870,
-    avgDuration: "5m 20s",
+    views: 3284,
+    avgDuration: "5m 28s",
     completionRate: 69,
+    status: "live",
+  },
+  {
+    rank: 5,
+    name: "Rewat Fort",
+    views: 1840,
+    avgDuration: "4m 50s",
+    completionRate: 74,
+    status: "live",
+  },
+  {
+    rank: 6,
+    name: "Nouvelle by Shadiyana",
+    views: 1560,
+    avgDuration: "4m 35s",
+    completionRate: 66,
     status: "live",
   },
 ];
