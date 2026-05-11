@@ -1,50 +1,29 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue';
+import { ref, onMounted, onBeforeUnmount, nextTick, computed } from 'vue';
+import { useSanity, urlFor } from '~/utils/sanity';
 const { $gsap, $ScrollTrigger } = useNuxtApp();
 
-interface ExperienceCard {
-  title: string;
-  category: string;
-  image: string;
-  alt: string;
-  slug?: string;
-  number: string;
-}
+const sanity = useSanity();
+const { data: toursData } = await useAsyncData('featured-experiences', () =>
+  sanity.fetch(
+    `*[_type=="tour" && defined(slug.current)] | order(_createdAt desc)[0...4]{
+      _id, title, slug, category, heroImage
+    }`,
+  ),
+  { server: false },
+);
 
-const EXPERIENCE_CARDS: ExperienceCard[] = [
-  {
-    title: "Golra Railway Station",
-    category: "Heritage",
-    image: "/images/tours/lahore_old_city_heritage_1773010984542.png",
-    alt: "Golra Railway Station — historic railway junction and museum in Islamabad",
-    slug: "golra-railway-station",
-    number: "01",
-  },
-  {
-    title: "Saidpur Village",
-    category: "Heritage",
-    image: "/saidpur.jpeg",
-    alt: "Saidpur Village — historic Mughal-era village in Islamabad",
-    slug: "saidpur-village",
-    number: "02",
-  },
-  {
-    title: "Dome Restaurant",
-    category: "Hospitality",
-    image: "/dome.jpeg",
-    alt: "Dome Restaurant — premium dining experience",
-    slug: "dome-restaurant",
-    number: "03",
-  },
-  {
-    title: "Serena Hotel",
-    category: "Hospitality",
-    image: "serena.jpeg",
-    alt: "Serena Hotel — luxury 5-star hotel in Islamabad",
-    slug: "serena-hotel",
-    number: "04",
-  },
-];
+const EXPERIENCE_CARDS = computed(() => {
+  const tours = toursData.value || [];
+  return tours.map((tour: any, i: number) => ({
+    title: tour.title,
+    category: tour.category || 'Heritage',
+    image: tour.heroImage ? urlFor(tour.heroImage).width(600).url() : '/images/tours/lahore_old_city_heritage_1773010984542.png',
+    alt: tour.title,
+    slug: tour.slug?.current,
+    number: String(i + 1).padStart(2, '0'),
+  }));
+});
 
 const sectionRef = ref<HTMLElement | null>(null);
 const headerRef = ref<HTMLElement | null>(null);
@@ -155,17 +134,16 @@ function onMouseMove(event: MouseEvent, index: number) {
 
       <!-- Interactive List (Clean Claude Style) -->
       <div ref="listRef" class="flex flex-col relative">
-        <component
-          :is="item.slug ? 'NuxtLink' : 'div'"
+        <NuxtLink
           v-for="(item, index) in EXPERIENCE_CARDS"
           :key="item.title"
-          :to="item.slug ? `/tours/${item.slug}` : undefined"
-          :ref="(el: any) => rowRefs[index] = el as HTMLElement"
+          :to="`/tours/${item.slug}`"
+          :ref="(el: any) => rowRefs[index] = el?.$el ?? el"
           class="group relative py-6 md:py-10 border-b border-border/30 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer hover:bg-surface/40 transition-colors duration-300 px-4 -mx-4 rounded-xl"
           @mousemove="onMouseMove($event, index)"
         >
           <!-- Left Side: Number & Title -->
-          <div class="flex items-center gap-6 md:gap-12 z-10 pointer-events-none">
+          <div class="flex items-center gap-6 md:gap-12 z-10">
             <span class="text-sm font-mono text-muted-foreground/60 group-hover:text-primary transition-colors duration-300">
               {{ item.number }}
             </span>
@@ -175,7 +153,7 @@ function onMouseMove(event: MouseEvent, index: number) {
           </div>
 
           <!-- Right Side: Category & Arrow -->
-          <div class="flex items-center gap-6 md:gap-12 z-10 pointer-events-none">
+          <div class="flex items-center gap-6 md:gap-12 z-10">
             <span class="text-xs uppercase tracking-[0.18em] text-muted-foreground hidden sm:block">
               {{ item.category }}
             </span>
@@ -190,8 +168,8 @@ function onMouseMove(event: MouseEvent, index: number) {
           </div>
 
           <!-- Floating Image Reveal (Shows on hover, follows cursor) -->
-          <div class="absolute inset-0 pointer-events-none z-20 overflow-hidden hidden md:block">
-            <div 
+          <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden hidden md:block">
+            <div
               class="absolute left-0 top-0 w-[300px] aspect-[3/4] overflow-hidden opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-400 ease-out transform-gpu pointer-events-none shadow-2xl rounded-2xl border border-white/10"
               style="will-change: transform, opacity;"
               :ref="(el: any) => imageRefs[index] = el as HTMLElement"
@@ -204,7 +182,7 @@ function onMouseMove(event: MouseEvent, index: number) {
             </div>
           </div>
 
-        </component>
+        </NuxtLink>
       </div>
 
       <!-- Bottom action -->
